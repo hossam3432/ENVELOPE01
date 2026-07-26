@@ -11,7 +11,9 @@
 
   /* Typography — elegant serif for editorial headlines, clean sans for the
      wordmark and utility text (labels, nav, dimension callouts). */
-  --font-serif: "Bodoni Moda", "Didot", serif;
+  /* TEST: headlines temporarily share the wordmark's face. To revert, restore
+     --font-serif to "Bodoni Moda", "Didot", serif. */
+  --font-serif: "Space Grotesk", "Helvetica Neue", sans-serif;
   --font-sans: "Space Grotesk", "Helvetica Neue", sans-serif;
 
   --tracking-vast: 0.35em;
