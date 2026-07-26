@@ -3,6 +3,7 @@ import Header from "./components/layout/Header.jsx";
 import MenuOverlay from "./components/layout/MenuOverlay.jsx";
 import BlueprintHero from "./components/hero/BlueprintHero.jsx";
 import FlagshipShowcase from "./components/product/FlagshipShowcase.jsx";
+import InteriorPlan from "./components/interior/InteriorPlan.jsx";
 import MaterialTruth from "./components/anatomy/MaterialTruth.jsx";
 import OrderInquiry from "./components/contact/OrderInquiry.jsx";
 import useDrawReveal from "./hooks/useDrawReveal.js";
@@ -23,6 +24,7 @@ export default function App() {
       <main>
         <BlueprintHero />
         <FlagshipShowcase />
+        <InteriorPlan />
         <MaterialTruth />
         <OrderInquiry />
       </main>

@@ -40,7 +40,7 @@ export default function OrderInquiry() {
     <section id="order" className="rule-b px-6 py-24 md:px-12 md:py-32">
       <div className="max-w-3xl">
         <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          04 &mdash; Order
+          05 &mdash; Order
         </p>
         <h2 className="mt-4 font-serif text-4xl leading-tight text-bone md:text-6xl">
           Request to Order.

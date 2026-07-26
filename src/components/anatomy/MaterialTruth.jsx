@@ -3,23 +3,38 @@ import TraceBorder from "../ui/TraceBorder.jsx";
 const SPECS = [
   {
     label: "Substance",
-    value: "1.2–1.4mm Full-Grain Leather.",
+    value: "1.2–1.4mm full-grain leather, matte.",
     truth: "Ages naturally. Never peels.",
   },
   {
+    label: "Geometry",
+    value: "One flat panel per face, folded into four facets.",
+    truth: "Creases skived to 0.7mm so they never crack white.",
+  },
+  {
     label: "Structure",
-    value: "No rigid board — leather firmness and lining stiffness.",
+    value: "No rigid board — 140mm gusset, reinforced flat base.",
     truth: "Stands unaided when empty.",
   },
   {
+    label: "Closure",
+    value: "#8 metal U-zip, ≈600mm track, twin sliders.",
+    truth: "90mm down each gusset. Opens from either end.",
+  },
+  {
     label: "Hardware",
-    value: "Brushed steel zip pulls, D-rings and feet.",
+    value: "Brushed steel fittings, D-rings, sliders and feet.",
     truth: "Chosen for what the hand registers, not plating grade.",
   },
   {
     label: "Construction",
     value: "7–9 SPI (Stitches Per Inch).",
-    truth: "Consistent stitch spacing throughout.",
+    truth: "Tolerance ±2mm on every dimension we publish.",
+  },
+  {
+    label: "Mass",
+    value: "1.15–1.30kg empty, strap attached.",
+    truth: "≈18 litres usable.",
   },
 ];
 
@@ -50,7 +65,7 @@ export default function MaterialTruth() {
     >
       <div className="max-w-3xl">
         <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          03 &mdash; Material Truth
+          04 &mdash; Material Truth
         </p>
         <h2 className="mt-4 font-serif text-4xl leading-tight text-bone md:text-6xl">
           The Anatomy of a Daily Investment.

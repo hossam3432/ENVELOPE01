@@ -2,9 +2,10 @@ import { useEffect } from "react";
 
 const LINKS = [
   { index: "01", label: "The Manifesto", href: "#blueprint" },
-  { index: "02", label: "The Tote", href: "#product" },
-  { index: "03", label: "Material Truth", href: "#anatomy" },
-  { index: "04", label: "Order", href: "#order" },
+  { index: "02", label: "Model 0.1", href: "#product" },
+  { index: "03", label: "The Interior", href: "#interior" },
+  { index: "04", label: "Material Truth", href: "#anatomy" },
+  { index: "05", label: "Order", href: "#order" },
 ];
 
 export default function MenuOverlay({ open, onClose }) {
