@@ -1,0 +1,192 @@
+@import "tailwindcss";
+
+@theme {
+  /* ENVELOPE 01 — strict palette: warm graphite + bone, brushed-steel accent */
+  --color-carbon: #221f1c;
+  --color-carbon-soft: #2c2925;
+  --color-bone: #f4f1ea;
+  --color-bone-dim: #dbd6c9;
+  --color-silver: #a8a6a0;
+  --color-silver-dim: #7d7b74;
+
+  /* Typography — elegant serif for editorial headlines, clean sans for the
+     wordmark and utility text (labels, nav, dimension callouts). */
+  --font-serif: "Bodoni Moda", "Didot", serif;
+  --font-sans: "Space Grotesk", "Helvetica Neue", sans-serif;
+
+  --tracking-vast: 0.35em;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-carbon);
+  color: var(--color-bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background-color: var(--color-bone);
+  color: var(--color-carbon);
+}
+
+/* Outline that traces itself around a box on reveal (see TraceBorder).
+   The rect uses pathLength="1", so dasharray and dashoffset are
+   unit-normalized regardless of the box's dimensions. */
+@keyframes trace-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Same trace, then a hold — one full cycle every 10s. */
+@keyframes trace-draw-loop {
+  0% {
+    stroke-dashoffset: 1;
+  }
+  16%,
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.trace-box {
+  position: relative;
+}
+
+.trace-box-rect {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+
+.trace-box.is-drawn .trace-box-rect {
+  animation: trace-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+/* Opt in to re-tracing. Must follow the draw-once rule to win the cascade. */
+.trace-box-loop.is-drawn .trace-box-rect {
+  animation: trace-draw-loop 10s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace-box.is-drawn .trace-box-rect,
+  .trace-box-loop.is-drawn .trace-box-rect {
+    animation: none;
+  }
+  .trace-box-rect {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Confirmation copy settling in after the form fades out. */
+@keyframes fade-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.fade-rise {
+  opacity: 0;
+  animation: fade-rise 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-rise {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+/* Horizontal rules draw left-to-right as they scroll into view.
+   Borders can't be trimmed, so the line is a pseudo-element scaled on the
+   X axis from its left edge. `.is-drawn` is applied by useRuleReveal.
+   Override --rule-color to change weight/tint per instance. */
+.rule-t,
+.rule-b {
+  position: relative;
+}
+
+.rule-t::after,
+.rule-b::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background-color: var(
+    --rule-color,
+    color-mix(in srgb, var(--color-silver-dim) 20%, transparent)
+  );
+  transform: scaleX(0);
+  transform-origin: left;
+  /* Expo-out: quick to leave, settles slowly at full width. */
+  transition:
+    transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.5s ease;
+  pointer-events: none;
+}
+
+.rule-t::after {
+  top: 0;
+}
+
+.rule-b::after {
+  bottom: 0;
+}
+
+.rule-t.is-drawn::after,
+.rule-b.is-drawn::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rule-t::after,
+  .rule-b::after {
+    transition: background-color 0.5s ease;
+    transform: scaleX(1);
+  }
+}
+
+/* Blueprint self-drawing animation (Component 2).
+   Paths use pathLength="1" so dasharray/offset are unit-normalized. */
+@keyframes bp-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes bp-fade {
+  to {
+    opacity: 1;
+  }
+}
+
+.bp-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: bp-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.bp-fade {
+  opacity: 0;
+  animation: bp-fade 0.9s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bp-draw {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .bp-fade {
+    animation: none;
+    opacity: 1;
+  }
+}
