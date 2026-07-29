@@ -83,7 +83,7 @@ const PLATES = [
 function Plate({ plate, number, className = "" }) {
   return (
     <figure className={className}>
-      <div className="trace-box relative">
+      <div className="relative">
         <div className="aspect-square max-h-[34dvh] overflow-hidden bg-carbon-soft">
           <img
             src={plate.src}
@@ -94,7 +94,11 @@ function Plate({ plate, number, className = "" }) {
             className="h-full w-full object-cover object-center"
           />
         </div>
-        <TraceBorder key={number} className="text-bone/70" strokeWidth={0.67} />
+        <TraceBorder
+          key={number}
+          className="trace-on-mount text-bone/70"
+          strokeWidth={0.67}
+        />
       </div>
       <figcaption className="mt-2 text-[11px] uppercase tracking-vast text-silver-dim">
         Pl. {String(number).padStart(2, "0")} &mdash; {plate.title}

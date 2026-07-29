@@ -127,6 +127,22 @@ body {
   }
 }
 
+/* Gallery plates. The outline re-traces every time the view changes, so it
+   can't wait on the scroll observer the way `.trace-box` does — it draws
+   itself as soon as it mounts, and React remounts it on each change. */
+.trace-on-mount {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: trace-draw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trace-on-mount {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+}
+
 /* Confirmation copy settling in after the form fades out. */
 @keyframes fade-rise {
   from {
