@@ -50,7 +50,7 @@ function InteriorPlanSheet() {
     <svg
       viewBox="0 0 720 360"
       role="img"
-      aria-label="Top-down plan of Model 0.1 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
+      aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
       className="w-full text-silver"
       fill="none"
       stroke="currentColor"

@@ -68,15 +68,16 @@ function GussetElevation() {
       stroke="currentColor"
       strokeWidth="1.1"
     >
-      {/* Gusset panel — 140 × 310 */}
+      {/* Gusset silhouette — 140 × 310. The envelope facets fold over the
+          top, so the profile tapers to the zip crown rather than squaring off. */}
       <path
         className="bp-draw"
         style={delay(0.1)}
         pathLength="1"
-        d="M156 90 H244 A5 5 0 0 1 249 95 V302 A5 5 0 0 1 244 307 H156 A5 5 0 0 1 151 302 V95 A5 5 0 0 1 156 90 Z"
+        d="M191 90 H209 L249 121 V297 A10 10 0 0 1 239 307 H161 A10 10 0 0 1 151 297 V121 Z"
       />
 
-      {/* Handles, edge on */}
+      {/* Handle, edge on — one per face, overlapping in this view */}
       <path
         className="bp-draw"
         style={delay(0.6)}
@@ -86,8 +87,8 @@ function GussetElevation() {
 
       {/* Zip run down the gusset — 90, terminating in a leather garage */}
       <g className="bp-fade" style={delay(1.0)} strokeWidth="0.9">
-        <path d="M200 90 V150" />
-        <rect x="195" y="150" width="10" height="12" rx="2" />
+        <path d="M200 90 V153" />
+        <rect x="195" y="153" width="10" height="12" rx="2" />
         <rect x="196" y="96" width="8" height="13" rx="2" />
       </g>
 
@@ -101,22 +102,22 @@ function GussetElevation() {
 
       {/* D-ring on a leather tab */}
       <g className="bp-fade" style={delay(1.3)} strokeWidth="0.9">
-        <path d="M168 90 V100" />
-        <circle cx="168" cy="106" r="6" />
+        <rect x="161" y="126" width="14" height="16" rx="2" />
+        <circle cx="168" cy="151" r="7" />
       </g>
 
       {/* Two of the four feet */}
       <g className="bp-fade" style={delay(1.4)} strokeWidth="0.9">
-        <rect x="157" y="307" width="11" height="6" rx="1" />
-        <rect x="232" y="307" width="11" height="6" rx="1" />
+        <rect x="163" y="307" width="11" height="6" rx="1" />
+        <rect x="226" y="307" width="11" height="6" rx="1" />
         <path d="M130 313 H270" opacity="0.5" />
       </g>
 
       {/* 90 zip run */}
       <g className="bp-fade" style={delay(1.6)} strokeWidth="0.8">
-        <path d="M132 90 V150" />
+        <path d="M132 90 V153" />
         <path d="M126 90 H138" />
-        <path d="M126 150 H138" />
+        <path d="M126 153 H138" />
         <text
           x="120"
           y="124"
@@ -211,11 +212,14 @@ function ScaleReference() {
         <path pathLength="1" d="M210 307 L357 198 L504 307" />
       </g>
 
-      {/* Handles */}
-      <g className="bp-draw" style={delay(1.0)} strokeWidth="1">
-        <path pathLength="1" d="M294 90 C294 20 346 20 346 90" />
-        <path pathLength="1" d="M368 90 C368 20 420 20 420 90" />
-      </g>
+      {/* Handle — one per face */}
+      <path
+        className="bp-draw"
+        style={delay(1.0)}
+        pathLength="1"
+        strokeWidth="1"
+        d="M322 90 C322 20 392 20 392 90"
+      />
 
       {/* Feet and ground */}
       <g className="bp-fade" style={delay(1.3)} strokeWidth="0.8">
@@ -389,7 +393,7 @@ export default function FlagshipShowcase() {
 
         <div>
           <h3 className="font-serif text-2xl text-bone md:text-3xl">
-            Model 0.1 &mdash; The Folded Briefcase
+            Model 001 &mdash; The Folded Briefcase
           </h3>
           <p className="mt-3 text-xs md:text-[13px] font-light uppercase leading-relaxed tracking-[0.18em] text-silver">
             One flat panel per face, folded into four facets. U-zip main

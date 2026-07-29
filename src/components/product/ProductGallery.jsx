@@ -24,7 +24,7 @@ const PLATES = [
     thumb: frontThumb,
     title: "Front Elevation",
     note: "420 × 310. One flat panel per face, folded into four facets.",
-    alt: "The Model 0.1 briefcase photographed square on: a black full-grain leather front panel creased into four facets around a central envelope flap, twin rolled handles, twin zip sliders at the top edge.",
+    alt: "The Model 001 briefcase photographed square on: a black full-grain leather front panel creased into four facets around a central envelope flap, twin rolled handles, twin zip sliders at the top edge.",
   },
   {
     src: gusset,
@@ -100,7 +100,7 @@ export default function ProductGallery() {
 
       <div
         role="group"
-        aria-label="Model 0.1 photographs — use the left and right arrow keys to change plate"
+        aria-label="Model 001 photographs — use the left and right arrow keys to change plate"
         tabIndex={0}
         onKeyDown={onKeyDown}
         className="relative mt-3 aspect-square overflow-hidden border border-silver-dim/20 bg-carbon-soft outline-none focus-visible:border-bone/60"

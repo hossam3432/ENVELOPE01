@@ -66,7 +66,7 @@ function ElevationSheet() {
     <svg
       viewBox="0 0 720 640"
       role="img"
-      aria-label="Technical front elevation of Model 0.1, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, twin rolled handles."
+      aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
       className="w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -125,30 +125,25 @@ function ElevationSheet() {
         d={`M186 ${BAG.top} H534`}
       />
 
-      {/* Handles — 250 overall, 100 clear drop, rolled Ø14 */}
+      {/* Handle — one per face. 250 overall, 100 clear drop, rolled Ø14 */}
       <path
         className="bp-draw"
         style={delay(1.7)}
         pathLength="1"
-        d="M283 176 C283 90 347 90 347 176"
+        d="M315 176 C315 90 405 90 405 176"
       />
       <path
         className="bp-draw"
-        style={delay(1.7)}
+        style={delay(2.05)}
         pathLength="1"
-        d="M373 176 C373 90 437 90 437 176"
+        strokeWidth="0.8"
+        d="M327 176 C327 104 393 104 393 176"
       />
-      <g className="bp-draw" style={delay(2.05)} strokeWidth="0.8">
-        <path pathLength="1" d="M295 176 C295 104 335 104 335 176" />
-        <path pathLength="1" d="M385 176 C385 104 425 104 425 176" />
-      </g>
 
       {/* Brushed steel handle fittings + twin sliders parked at centre */}
       <g className="bp-fade" style={delay(2.3)} strokeWidth="0.9">
-        <rect x="277" y="168" width="12" height="20" rx="1.5" />
-        <rect x="341" y="168" width="12" height="20" rx="1.5" />
-        <rect x="367" y="168" width="12" height="20" rx="1.5" />
-        <rect x="431" y="168" width="12" height="20" rx="1.5" />
+        <rect x="309" y="168" width="12" height="20" rx="1.5" />
+        <rect x="399" y="168" width="12" height="20" rx="1.5" />
         <path d="M352 176 V182" />
         <rect x="343" y="182" width="9" height="15" rx="2" />
         <path d="M368 176 V182" />
@@ -174,26 +169,25 @@ function ElevationSheet() {
         <path d="M132 450 H588" opacity="0.55" />
       </g>
 
-      {/* Hidden detail — front pocket behind the flap facet, zip run down
-          the gusset. Dashed, drafting convention for concealed edges. */}
+      {/* Hidden detail — the zip run down each gusset. Dashed, drafting
+          convention for concealed edges. */}
       <g
         className="bp-fade"
         style={delay(2.75)}
         strokeWidth="0.75"
         strokeDasharray="5 4"
       >
-        <path d="M188 176 V270 H532 V176" />
         <path d="M186 176 V253" />
         <path d="M534 176 V253" />
       </g>
 
-      {/* Handle drop — 100 mm clear, dimensioned in the notch between handles */}
+      {/* Handle drop — 100 mm clear */}
       <g className="bp-fade" style={delay(2.9)} strokeWidth="0.8">
-        <path d={`M${CX} 90 V176`} />
-        <path d={`M354 90 H366`} />
-        <path d={`M354 176 H366`} />
+        <path d="M290 90 V176" />
+        <path d="M284 90 H296" />
+        <path d="M284 176 H296" />
         <text
-          x={CX}
+          x="290"
           y="80"
           textAnchor="middle"
           fill="currentColor"
@@ -264,14 +258,6 @@ function ElevationSheet() {
         lines={["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"]}
       />
       <Callout
-        at={3.5}
-        leader="M190 250 L120 356 L20 356"
-        dot={[190, 250]}
-        x={20}
-        y={335}
-        lines={["FRONT POCKET", "400 × 110 DEEP"]}
-      />
-      <Callout
         at={3.6}
         leader="M200 449 L120 466 L20 466"
         dot={[200, 449]}
@@ -280,18 +266,9 @@ function ElevationSheet() {
         lines={["STEEL FEET ×4"]}
       />
       <Callout
-        at={3.3}
-        leader="M410 96 L520 70 L700 70"
-        dot={[410, 96]}
-        x={700}
-        y={49}
-        anchor="end"
-        lines={["ROLLED HANDLE Ø14", "250 OVERALL"]}
-      />
-      <Callout
         at={3.45}
-        leader="M440 172 L500 112 L700 112"
-        dot={[437, 174]}
+        leader="M408 172 L500 112 L700 112"
+        dot={[405, 174]}
         x={700}
         y={104}
         anchor="end"
@@ -322,7 +299,7 @@ function ElevationSheet() {
           style={TITLE_CELL}
           opacity="0.7"
         >
-          DWG
+          MODEL
         </text>
         <text
           x="95"
@@ -342,7 +319,7 @@ function ElevationSheet() {
           stroke="none"
           style={TITLE_CELL}
         >
-          <tspan x="166">MODEL 0.1 — FOLDED BRIEFCASE</tspan>
+          <tspan x="166">FOLDED BRIEFCASE</tspan>
           <tspan x="166" dy="15" opacity="0.7">
             VIEW 1 — FRONT ELEVATION
           </tspan>
@@ -401,7 +378,7 @@ export default function BlueprintHero() {
       className="rule-b relative flex min-h-screen flex-col justify-center px-6 pt-28 pb-24 md:px-12"
     >
       <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-        <p>Fig. 01 &mdash; Model 0.1, Front Elevation</p>
+        <p>Fig. 01 &mdash; Model 001, Front Elevation</p>
         <p className="hidden md:block">Tolerance &plusmn;2 MM &mdash; Design Intent</p>
       </div>
 
