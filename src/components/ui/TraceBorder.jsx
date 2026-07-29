@@ -1,14 +1,17 @@
 /**
- * A 1px outline that traces itself around its parent box on reveal.
+ * An outline that traces itself around its parent box on reveal.
  *
  * Drawn as an SVG rect rather than a CSS border so the stroke can be
  * trimmed. The parent must carry `trace-box` (and `trace-box-loop` to
  * re-trace on a 10s cycle); `useDrawReveal` starts it on scroll.
  *
  * `className` lands on the rect, so a text-color utility retints the
- * stroke via currentColor.
+ * stroke via currentColor. `strokeWidth` is in px and does not scale with
+ * the box — 0.67 is a 0.5pt hairline.
+ *
+ * Remount it (give it a `key` that changes) to re-run the trace.
  */
-export default function TraceBorder({ className = "" }) {
+export default function TraceBorder({ className = "", strokeWidth = 1 }) {
   return (
     <svg
       aria-hidden="true"
@@ -24,7 +27,7 @@ export default function TraceBorder({ className = "" }) {
         height="100"
         fill="none"
         stroke="currentColor"
-        strokeWidth="1"
+        strokeWidth={strokeWidth}
         vectorEffect="non-scaling-stroke"
         pathLength="1"
       />

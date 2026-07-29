@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import TraceBorder from "../ui/TraceBorder.jsx";
+
 import front from "../../assets/product/01-front.jpg";
 import gusset from "../../assets/product/02-gusset.jpg";
 import top from "../../assets/product/03-top.jpg";
@@ -70,21 +72,29 @@ const PLATES = [
   },
 ];
 
-/* One frame. Deliberately not keyed by src — the <img> element persists
+/* One frame. The <img> is deliberately not keyed — the element persists
    across changes so the browser keeps the old plate on screen until the new
-   one has decoded, and the frame never flashes empty mid-change. */
+   one has decoded, and the frame never flashes empty mid-change.
+
+   The 0.5pt outline is a trimmed SVG stroke, not a CSS border, and it is
+   keyed on the plate number: changing view remounts it, so the line draws
+   itself around the new frame. It sits outside the clipping box so the
+   hairline isn't sliced in half at the edges. */
 function Plate({ plate, number, className = "" }) {
   return (
     <figure className={className}>
-      <div className="relative aspect-square max-h-[38dvh] overflow-hidden border border-silver-dim/20 bg-carbon-soft">
-        <img
-          src={plate.src}
-          alt={plate.alt}
-          width="1400"
-          height="1875"
-          decoding="async"
-          className="h-full w-full object-cover object-center"
-        />
+      <div className="trace-box relative">
+        <div className="aspect-square max-h-[34dvh] overflow-hidden bg-carbon-soft">
+          <img
+            src={plate.src}
+            alt={plate.alt}
+            width="1400"
+            height="1875"
+            decoding="async"
+            className="h-full w-full object-cover object-center"
+          />
+        </div>
+        <TraceBorder key={number} className="text-bone/70" strokeWidth={0.67} />
       </div>
       <figcaption className="mt-2 text-[11px] uppercase tracking-vast text-silver-dim">
         Pl. {String(number).padStart(2, "0")} &mdash; {plate.title}
@@ -147,12 +157,13 @@ export default function ProductGallery() {
             onClick={() => setIndex(i)}
             aria-label={`Plate ${i + 1} — ${item.title}`}
             aria-current={i === index ? "true" : undefined}
-            className={`h-14 overflow-hidden border transition-opacity duration-300 md:h-16 ${
+            className={`aspect-square overflow-hidden border bg-carbon-soft p-1 transition-opacity duration-300 ${
               i === index
                 ? "border-bone/70 opacity-100"
                 : "border-silver-dim/20 opacity-50 hover:opacity-90"
             }`}
           >
+            {/* contain, not cover — the whole plate is visible in the strip */}
             <img
               src={item.thumb}
               alt=""
@@ -160,7 +171,7 @@ export default function ProductGallery() {
               height="295"
               loading="lazy"
               decoding="async"
-              className="h-full w-full object-cover object-center"
+              className="h-full w-full object-contain object-center"
             />
           </button>
         ))}

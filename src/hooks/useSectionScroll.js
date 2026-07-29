@@ -53,6 +53,14 @@ export default function useSectionScroll() {
       const limit = maxScroll();
       const next = [];
 
+      // A zero-height viewport — a hidden tab, a detached preview frame —
+      // would make the per-screen loop below step by nothing and run until
+      // the array overflows, taking the render down with it.
+      if (!(vh > 0)) {
+        stops = [0];
+        return;
+      }
+
       for (const panel of document.querySelectorAll("[data-panel]")) {
         const top = panel.offsetTop;
         const height = panel.offsetHeight;
