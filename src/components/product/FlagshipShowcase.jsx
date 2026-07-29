@@ -1,3 +1,5 @@
+import ProductGallery from "./ProductGallery.jsx";
+
 const delay = (s) => ({ animationDelay: `${s}s` });
 
 const NOTE = {
@@ -61,7 +63,7 @@ function GussetElevation() {
       viewBox="0 0 400 400"
       role="img"
       aria-label="Right gusset elevation: 140 millimetre depth, zip running 90 millimetres down from the top edge to a leather garage above the facet fold line, D-ring at the top, two of the four steel feet visible."
-      className="h-full w-full text-silver"
+      className="w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.1"
@@ -383,18 +385,7 @@ export default function FlagshipShowcase() {
       </div>
 
       <div className="mt-14 grid gap-10 md:mt-20 md:grid-cols-2 md:gap-16">
-        <div className="relative flex aspect-square items-center justify-center border border-silver-dim/20 bg-carbon-soft p-6">
-          <span className="absolute top-4 left-4 text-[11px] uppercase tracking-vast text-silver-dim">
-            Fig. 03
-          </span>
-          <span className="absolute top-4 right-4 border border-bone/40 px-2 py-1 text-[11px] uppercase tracking-vast text-bone">
-            Right Gusset
-          </span>
-          <GussetElevation />
-          <span className="absolute bottom-4 left-4 text-[11px] uppercase tracking-vast text-silver-dim">
-            Cairo, EG
-          </span>
-        </div>
+        <ProductGallery />
 
         <div>
           <h3 className="font-serif text-2xl text-bone md:text-3xl">
@@ -438,8 +429,24 @@ export default function FlagshipShowcase() {
         </div>
       </div>
 
-      {/* Scale reference — does the laptop actually fit */}
+      {/* The gusset, drawn — the plate above shows the same view photographed */}
       <div className="rule-t mt-20 pt-14 md:mt-28">
+        <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+          <p>Fig. 03 &mdash; Right Gusset, Elevation</p>
+          <p className="hidden md:block">140 Deep</p>
+        </div>
+        <div className="mx-auto mt-8 w-full max-w-md">
+          <GussetElevation />
+        </div>
+        <p className="mx-auto mt-8 max-w-2xl text-base font-light leading-relaxed text-silver">
+          The zip turns 90 mm down each gusset and stops in a leather garage
+          above the facet fold line &mdash; so the track never crosses a crease,
+          and the bag opens from either end without fighting the fold.
+        </p>
+      </div>
+
+      {/* Scale reference — does the laptop actually fit */}
+      <div className="rule-t mt-16 pt-14 md:mt-24">
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
           <p>Fig. 15 &mdash; Scale Reference</p>
           <p className="hidden md:block">16&Prime; Laptop In Situ</p>
