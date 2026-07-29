@@ -70,9 +70,36 @@ const PLATES = [
   },
 ];
 
+/* One frame. Deliberately not keyed by src — the <img> element persists
+   across changes so the browser keeps the old plate on screen until the new
+   one has decoded, and the frame never flashes empty mid-change. */
+function Plate({ plate, number, className = "" }) {
+  return (
+    <figure className={className}>
+      <div className="relative aspect-square max-h-[38dvh] overflow-hidden border border-silver-dim/20 bg-carbon-soft">
+        <img
+          src={plate.src}
+          alt={plate.alt}
+          width="1400"
+          height="1875"
+          decoding="async"
+          className="h-full w-full object-cover object-center"
+        />
+      </div>
+      <figcaption className="mt-2 text-[11px] uppercase tracking-vast text-silver-dim">
+        Pl. {String(number).padStart(2, "0")} &mdash; {plate.title}
+      </figcaption>
+    </figure>
+  );
+}
+
 export default function ProductGallery() {
   const [index, setIndex] = useState(0);
   const plate = PLATES[index];
+
+  // The pair advances together: pick a plate and its neighbour comes with it.
+  const pairIndex = (index + 1) % PLATES.length;
+  const pairPlate = PLATES[pairIndex];
 
   const step = (delta) =>
     setIndex((i) => (i + delta + PLATES.length) % PLATES.length);
@@ -90,35 +117,29 @@ export default function ProductGallery() {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 text-[11px] uppercase tracking-vast text-silver-dim">
-        <p>
-          Pl. {String(index + 1).padStart(2, "0")} &mdash; {plate.title}
-        </p>
+        <p>Plates</p>
         <p className="shrink-0">
           {String(index + 1).padStart(2, "0")} / {String(PLATES.length).padStart(2, "0")}
         </p>
       </div>
 
+      {/* Two plates side by side from lg up, one below it. */}
       <div
         role="group"
         aria-label="Model 001 photographs — use the left and right arrow keys to change plate"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="relative mt-3 aspect-square overflow-hidden border border-silver-dim/20 bg-carbon-soft outline-none focus-visible:border-bone/60"
+        className="mt-3 grid gap-3 outline-none focus-visible:[&_.aspect-square]:border-bone/60 lg:grid-cols-2"
       >
-        {/* No key here on purpose — swapping src in place keeps the previous
-            plate on screen until the next one has decoded, so the frame never
-            flashes empty mid-change. */}
-        <img
-          src={plate.src}
-          alt={plate.alt}
-          width="1400"
-          height="1875"
-          decoding="async"
-          className="h-full w-full object-cover object-center"
+        <Plate plate={plate} number={index + 1} />
+        <Plate
+          plate={pairPlate}
+          number={pairIndex + 1}
+          className="hidden lg:block"
         />
       </div>
 
-      <div className="mt-2 grid grid-cols-7 gap-2">
+      <div className="mt-3 grid grid-cols-7 gap-2">
         {PLATES.map((item, i) => (
           <button
             key={item.src}
@@ -126,7 +147,7 @@ export default function ProductGallery() {
             onClick={() => setIndex(i)}
             aria-label={`Plate ${i + 1} — ${item.title}`}
             aria-current={i === index ? "true" : undefined}
-            className={`aspect-square overflow-hidden border transition-opacity duration-300 ${
+            className={`h-14 overflow-hidden border transition-opacity duration-300 md:h-16 ${
               i === index
                 ? "border-bone/70 opacity-100"
                 : "border-silver-dim/20 opacity-50 hover:opacity-90"

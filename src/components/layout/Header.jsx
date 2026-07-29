@@ -18,7 +18,7 @@ export default function Header({ menuOpen, onToggleMenu }) {
           the page instead of ending in a hard box edge. */}
       <div
         aria-hidden="true"
-        className={`pointer-events-none absolute inset-x-0 top-0 -bottom-8 bg-[#1e1b18]/80 backdrop-blur-md transition-opacity duration-500 ease-out ${
+        className={`pointer-events-none absolute inset-x-0 top-0 -bottom-8 bg-carbon/80 backdrop-blur-md transition-opacity duration-500 ease-out ${
           scrolled ? "opacity-100" : "opacity-0"
         }`}
         style={{ maskImage: feather, WebkitMaskImage: feather }}

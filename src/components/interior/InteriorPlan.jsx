@@ -1,4 +1,5 @@
 import TraceBorder from "../ui/TraceBorder.jsx";
+import { PANEL } from "../ui/panel.js";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -51,7 +52,7 @@ function InteriorPlanSheet() {
       viewBox="0 0 720 360"
       role="img"
       aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
-      className="w-full text-silver"
+      className="mx-auto block max-h-[46dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -232,42 +233,47 @@ const CLEAR_DIMS = [
 
 export default function InteriorPlan() {
   return (
-    <section id="interior" className="rule-b px-6 py-24 md:px-12 md:py-32">
-      <div className="max-w-3xl">
-        <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          03 &mdash; The Interior
-        </p>
-        <h2 className="mt-4 font-serif text-4xl leading-tight text-bone md:text-6xl">
-          Medium compartmented. Hybrid materials.
-        </h2>
-        <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-silver">
-          Not all-leather, not all-nylon. A full leather lining adds close to
-          200 g on a 1.2 kg bag, on surfaces you touch once a day and look at
-          rarely. All-nylon reads cheap the moment the bag is opened &mdash;
-          which is the moment you decide whether the price was justified.
-        </p>
-      </div>
-
-      <div className="mt-14 md:mt-20">
-        <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
-          <p className="hidden md:block">Plan &mdash; Millimetres</p>
+    <>
+      {/* The plan, and why the interior is built this way */}
+      <section id="interior" data-panel className={PANEL}>
+        <div className="max-w-3xl">
+          <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+            03 &mdash; The Interior
+          </p>
+          <h2 className="mt-3 font-serif text-3xl leading-tight text-bone md:text-5xl">
+            Medium compartmented. Hybrid materials.
+          </h2>
+          <p className="mt-4 max-w-xl text-base font-light leading-relaxed text-silver">
+            Not all-leather, not all-nylon. A full leather lining adds close to
+            200 g on a 1.2 kg bag, on surfaces you touch once a day and look at
+            rarely. All-nylon reads cheap the moment the bag is opened &mdash;
+            which is the moment you decide whether the price was justified.
+          </p>
         </div>
-        <div className="-mx-6 mt-8 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
-          <div className="mx-auto w-full max-w-3xl min-w-[600px]">
-            <InteriorPlanSheet />
+
+        <div className="mt-8 md:mt-10">
+          <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+            <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
+            <p className="hidden md:block">Plan &mdash; Millimetres</p>
+          </div>
+          <div className="-mx-6 mt-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
+            <div className="mx-auto w-full max-w-3xl min-w-[600px]">
+              <InteriorPlanSheet />
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div className="mt-16 grid gap-12 md:mt-24 md:grid-cols-2 md:gap-16">
+      {/* Every surface and every pocket, published */}
+      <section id="fittings" data-panel className={PANEL}>
+        <div className="grid gap-10 md:grid-cols-2 md:gap-16">
         <div>
           <p className="text-[11px] uppercase tracking-vast text-silver-dim">
             Surfaces
           </p>
-          <dl className="rule-t mt-6 divide-y divide-silver-dim/15">
+          <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
             {SURFACES.map((row) => (
-              <div key={row.surface} className="py-4">
+              <div key={row.surface} className="py-3">
                 <dt className="text-sm text-bone md:text-base">{row.surface}</dt>
                 <dd className="mt-1 text-xs font-light uppercase leading-relaxed tracking-[0.16em] text-silver">
                   {row.material}
@@ -276,14 +282,14 @@ export default function InteriorPlan() {
             ))}
           </dl>
 
-          <p className="mt-12 text-[11px] uppercase tracking-vast text-silver-dim">
+          <p className="mt-8 text-[11px] uppercase tracking-vast text-silver-dim">
             Interior clear dimensions
           </p>
-          <dl className="rule-t mt-6 divide-y divide-silver-dim/15">
+          <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
             {CLEAR_DIMS.map((row) => (
               <div
                 key={row.label}
-                className="flex items-baseline justify-between gap-4 py-4"
+                className="flex items-baseline justify-between gap-4 py-3"
               >
                 <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
                   {row.label}
@@ -298,9 +304,9 @@ export default function InteriorPlan() {
           <p className="text-[11px] uppercase tracking-vast text-silver-dim">
             Pockets
           </p>
-          <dl className="rule-t mt-6 divide-y divide-silver-dim/15">
+          <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
             {POCKETS.map((row) => (
-              <div key={row.name} className="py-4">
+              <div key={row.name} className="py-3">
                 <dt className="flex items-baseline justify-between gap-4 text-sm text-bone md:text-base">
                   <span>{row.name}</span>
                   <span className="shrink-0 text-[11px] uppercase tracking-vast text-silver-dim">
@@ -314,11 +320,13 @@ export default function InteriorPlan() {
             ))}
           </dl>
         </div>
-      </div>
+        </div>
+      </section>
 
       {/* Front pocket — the one moving part on the bag */}
-      <div className="trace-box mt-16 bg-carbon px-6 py-14 text-bone md:mt-24 md:px-14 md:py-20">
-        <TraceBorder className="text-white/25" />
+      <section id="front-pocket" data-panel className={PANEL}>
+      <div className="trace-box bg-carbon px-6 py-12 text-bone md:px-14 md:py-16">
+        <TraceBorder className="text-bone/25" />
         <div className="grid gap-10 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
@@ -371,6 +379,7 @@ export default function InteriorPlan() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

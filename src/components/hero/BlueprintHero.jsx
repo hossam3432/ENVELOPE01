@@ -1,3 +1,5 @@
+import { PANEL } from "../ui/panel.js";
+
 const delay = (s) => ({ animationDelay: `${s}s` });
 
 const LABEL = {
@@ -67,7 +69,7 @@ function ElevationSheet() {
       viewBox="0 0 720 640"
       role="img"
       aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
-      className="w-full text-silver"
+      className="mx-auto block max-h-[58dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -130,20 +132,20 @@ function ElevationSheet() {
         className="bp-draw"
         style={delay(1.7)}
         pathLength="1"
-        d="M315 176 C315 90 405 90 405 176"
+        d="M292 176 C292 90 428 90 428 176"
       />
       <path
         className="bp-draw"
         style={delay(2.05)}
         pathLength="1"
         strokeWidth="0.8"
-        d="M327 176 C327 104 393 104 393 176"
+        d="M304 176 C304 104 416 104 416 176"
       />
 
       {/* Brushed steel handle fittings + twin sliders parked at centre */}
       <g className="bp-fade" style={delay(2.3)} strokeWidth="0.9">
-        <rect x="309" y="168" width="12" height="20" rx="1.5" />
-        <rect x="399" y="168" width="12" height="20" rx="1.5" />
+        <rect x="286" y="168" width="12" height="20" rx="1.5" />
+        <rect x="422" y="168" width="12" height="20" rx="1.5" />
         <path d="M352 176 V182" />
         <rect x="343" y="182" width="9" height="15" rx="2" />
         <path d="M368 176 V182" />
@@ -167,35 +169,6 @@ function ElevationSheet() {
         <rect x="196" y="442" width="16" height="8" rx="1" />
         <rect x="508" y="442" width="16" height="8" rx="1" />
         <path d="M132 450 H588" opacity="0.55" />
-      </g>
-
-      {/* Hidden detail — the zip run down each gusset. Dashed, drafting
-          convention for concealed edges. */}
-      <g
-        className="bp-fade"
-        style={delay(2.75)}
-        strokeWidth="0.75"
-        strokeDasharray="5 4"
-      >
-        <path d="M186 176 V253" />
-        <path d="M534 176 V253" />
-      </g>
-
-      {/* Handle drop — 100 mm clear */}
-      <g className="bp-fade" style={delay(2.9)} strokeWidth="0.8">
-        <path d="M290 90 V176" />
-        <path d="M284 90 H296" />
-        <path d="M284 176 H296" />
-        <text
-          x="290"
-          y="80"
-          textAnchor="middle"
-          fill="currentColor"
-          stroke="none"
-          style={LABEL}
-        >
-          100
-        </text>
       </g>
 
       {/* Width — 420 */}
@@ -267,8 +240,8 @@ function ElevationSheet() {
       />
       <Callout
         at={3.45}
-        leader="M408 172 L500 112 L700 112"
-        dot={[405, 174]}
+        leader="M431 172 L510 112 L700 112"
+        dot={[428, 174]}
         x={700}
         y={104}
         anchor="end"
@@ -373,69 +346,89 @@ const QUICK_SPECS = [
 
 export default function BlueprintHero() {
   return (
-    <section
-      id="blueprint"
-      className="rule-b relative flex min-h-screen flex-col justify-center px-6 pt-28 pb-24 md:px-12"
-    >
-      <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-        <p>Fig. 01 &mdash; Model 001, Front Elevation</p>
-        <p className="hidden md:block">Tolerance &plusmn;2 MM &mdash; Design Intent</p>
-      </div>
-
-      {/* Below md the sheet would shrink its callouts to nothing, so it keeps
-          a legible minimum width and scrolls sideways instead. */}
-      <div className="-mx-6 mt-10 overflow-x-auto px-6 md:mx-0 md:mt-6 md:overflow-visible md:px-0">
-        <div className="mx-auto w-full max-w-3xl min-w-[600px]">
-          <ElevationSheet />
+    <>
+      {/* Panel 1 — the drawing */}
+      <section
+        id="blueprint"
+        data-panel
+        className="rule-b relative flex min-h-[100dvh] flex-col justify-center px-6 pt-24 pb-12 md:px-12"
+      >
+        <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+          <p>Fig. 01 &mdash; Model 001, Front Elevation</p>
+          <p className="hidden md:block">
+            Tolerance &plusmn;2 MM &mdash; Design Intent
+          </p>
         </div>
-      </div>
 
-      <dl className="mx-auto mt-8 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-6 border-t border-silver-dim/20 pt-8 md:grid-cols-4">
-        {QUICK_SPECS.map((spec) => (
-          <div key={spec.label}>
-            <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
-              {spec.label}
-            </dt>
-            <dd className="mt-2 font-serif text-xl text-bone md:text-2xl">
-              {spec.value}
-            </dd>
+        {/* Below md the sheet would shrink its callouts to nothing, so it
+            keeps a legible minimum width and scrolls sideways instead. */}
+        <div className="-mx-6 mt-8 overflow-x-auto px-6 md:mx-0 md:mt-4 md:overflow-visible md:px-0">
+          <div className="mx-auto w-full max-w-3xl min-w-[600px]">
+            <ElevationSheet />
           </div>
-        ))}
-      </dl>
+        </div>
 
-      <div className="mt-16 max-w-4xl md:mt-20">
-        <h1 className="font-serif text-4xl leading-[1.15] text-bone md:text-6xl">
-          Structured elegance for the modern workday.
-        </h1>
-        <p className="mt-8 max-w-xl text-base font-light leading-relaxed text-silver">
-          One flat panel, folded into four triangular facets that meet at a
-          single point. A 16&Prime; laptop, a full day&rsquo;s carry, and a
-          shape that stands on its own. No external logos. No excess. Just
-          pure structural geometry.
-        </p>
-        <a
-          href="#product"
-          className="mt-10 inline-block border border-bone/60 px-8 py-4 text-xs md:text-[13px] uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
-        >
-          View the Briefcase
-        </a>
-      </div>
+        <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-4">
+          {QUICK_SPECS.map((spec) => (
+            <div key={spec.label}>
+              <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
+                {spec.label}
+              </dt>
+              <dd className="mt-2 font-serif text-lg text-bone md:text-xl">
+                {spec.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
 
-      <div className="rule-t mt-24 max-w-4xl pt-14 md:mt-32">
-        <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          Manifesto
-        </p>
-        <h2 className="mt-6 font-serif text-3xl leading-tight text-bone md:text-5xl">
-          We do not decorate. We construct.
-        </h2>
-        <p className="mt-8 max-w-2xl text-base font-light leading-loose text-silver">
-          In a market of identical bags, we asked what happens when structure
-          becomes the only signature. Each piece is cut, folded, and finished
-          by hand in small Egyptian workshops, built for the private-sector
-          professional who values order and quiet authority. One model, made
-          and sold on an ongoing basis &mdash; not a limited run.
-        </p>
-      </div>
-    </section>
+      {/* Panel 2 — the headline */}
+      <section
+        id="statement"
+        data-panel
+        className={PANEL}
+      >
+        <div className="max-w-4xl">
+          <h1 className="font-serif text-4xl leading-[1.15] text-bone md:text-6xl">
+            Structured elegance for the modern workday.
+          </h1>
+          <p className="mt-8 max-w-xl text-base font-light leading-relaxed text-silver">
+            One flat panel, folded into four triangular facets that meet at a
+            single point. A 16&Prime; laptop, a full day&rsquo;s carry, and a
+            shape that stands on its own. No external logos. No excess. Just
+            pure structural geometry.
+          </p>
+          <a
+            href="#product"
+            className="mt-10 inline-block border border-bone/60 px-8 py-4 text-xs md:text-[13px] uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
+          >
+            View the Briefcase
+          </a>
+        </div>
+      </section>
+
+      {/* Panel 3 — the manifesto */}
+      <section
+        id="manifesto"
+        data-panel
+        className={PANEL}
+      >
+        <div className="max-w-4xl">
+          <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+            Manifesto
+          </p>
+          <h2 className="mt-6 font-serif text-3xl leading-tight text-bone md:text-5xl">
+            We do not decorate. We construct.
+          </h2>
+          <p className="mt-8 max-w-2xl text-base font-light leading-loose text-silver">
+            In a market of identical bags, we asked what happens when structure
+            becomes the only signature. Each piece is cut, folded, and finished
+            by hand in small Egyptian workshops, built for the private-sector
+            professional who values order and quiet authority. One model, made
+            and sold on an ongoing basis &mdash; not a limited run.
+          </p>
+        </div>
+      </section>
+    </>
   );
 }

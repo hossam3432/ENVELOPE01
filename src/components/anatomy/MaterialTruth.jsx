@@ -1,4 +1,5 @@
 import TraceBorder from "../ui/TraceBorder.jsx";
+import { PANEL } from "../ui/panel.js";
 
 const SPECS = [
   {
@@ -40,14 +41,14 @@ const SPECS = [
 
 function SpecRow({ spec, index }) {
   return (
-    <div className="rule-b group grid grid-cols-12 items-baseline gap-4 py-8 hover:[--rule-color:#a8a6a080] md:py-10">
+    <div className="rule-b group grid grid-cols-12 items-baseline gap-4 py-3 hover:[--rule-color:#a8a6a080]">
       <span className="col-span-2 text-[11px] md:text-xs tracking-vast text-silver-dim md:col-span-1">
         {String(index + 1).padStart(2, "0")}
       </span>
       <span className="col-span-10 text-[11px] md:text-xs uppercase tracking-vast text-silver md:col-span-2">
         {spec.label}
       </span>
-      <p className="col-span-10 col-start-3 mt-2 font-serif text-2xl leading-snug text-bone md:col-span-5 md:col-start-4 md:mt-0 md:text-3xl">
+      <p className="col-span-10 col-start-3 mt-2 font-serif text-lg leading-snug text-bone md:col-span-5 md:col-start-4 md:mt-0 md:text-2xl">
         {spec.value}
       </p>
       <p className="col-span-10 col-start-3 text-[13px] font-light uppercase leading-relaxed tracking-[0.16em] text-silver-dim md:col-span-4 md:col-start-9 md:text-right">
@@ -59,33 +60,33 @@ function SpecRow({ spec, index }) {
 
 export default function MaterialTruth() {
   return (
-    <section
-      id="anatomy"
-      className="rule-b px-6 py-24 md:px-12 md:py-32"
-    >
-      <div className="max-w-3xl">
-        <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          04 &mdash; Material Truth
-        </p>
-        <h2 className="mt-4 font-serif text-4xl leading-tight text-bone md:text-6xl">
-          The Anatomy of a Daily Investment.
-        </h2>
-        <p className="mt-6 max-w-xl text-base font-light leading-relaxed text-silver">
-          True luxury is absolute transparency. Every material and dimension
-          below is published, so you can check it against anything else
-          you're considering.
-        </p>
-      </div>
+    <>
+      <section id="anatomy" data-panel className={PANEL}>
+        <div className="max-w-3xl">
+          <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+            04 &mdash; Material Truth
+          </p>
+          <h2 className="mt-3 font-serif text-3xl leading-tight text-bone md:text-5xl">
+            The Anatomy of a Daily Investment.
+          </h2>
+          <p className="mt-4 max-w-xl text-base font-light leading-relaxed text-silver">
+            True luxury is absolute transparency. Every material and dimension
+            below is published, so you can check it against anything else
+            you're considering.
+          </p>
+        </div>
 
-      <div className="rule-t mt-14 md:mt-20">
-        {SPECS.map((spec, i) => (
-          <SpecRow key={spec.label} spec={spec} index={i} />
-        ))}
-      </div>
+        <div className="rule-t mt-8 md:mt-10">
+          {SPECS.map((spec, i) => (
+            <SpecRow key={spec.label} spec={spec} index={i} />
+          ))}
+        </div>
+      </section>
 
       {/* The Handover — traced-outline panel */}
-      <div className="trace-box mt-14 bg-carbon px-6 py-14 text-bone md:mt-20 md:px-14 md:py-20">
-        <TraceBorder className="text-white/25" />
+      <section id="handover" data-panel className={PANEL}>
+      <div className="trace-box bg-carbon px-6 py-12 text-bone md:px-14 md:py-16">
+        <TraceBorder className="text-bone/25" />
         <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
@@ -103,6 +104,7 @@ export default function MaterialTruth() {
           </p>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

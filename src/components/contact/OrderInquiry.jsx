@@ -1,15 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import TraceBorder from "../ui/TraceBorder.jsx";
+import { PANEL } from "../ui/panel.js";
 
 // Form fade-out duration. Must match the duration utility on the <form>.
 const FORM_EXIT_MS = 450;
 
+// The two colourways. `swatch` is the literal leather colour shown in the
+// chip; `theme` is the value written to data-colorway on <html>, which
+// repaints the site (see the colorway block in index.css).
+const COLORWAYS = [
+  { name: "Black", swatch: "#000000", theme: "black" },
+  { name: "Bone", swatch: "#f4f1ea", theme: "bone" },
+];
+
 const FIELD_BASE =
-  "w-full border-b border-silver-dim/40 bg-transparent pt-4 pb-3 font-serif text-xl text-bone outline-none transition-colors duration-300 placeholder:text-silver/80 focus:border-bone md:text-2xl";
+  "w-full border-b border-silver-dim/40 bg-transparent pt-3 pb-2 font-serif text-lg text-bone outline-none transition-colors duration-300 placeholder:text-silver/80 focus:border-bone md:text-xl";
 
 function Field({ index, label, children }) {
   return (
-    <div className="rule-t grid gap-2 py-8 md:grid-cols-12 md:gap-6 md:py-10">
+    <div className="rule-t grid gap-2 py-4 md:grid-cols-12 md:gap-6 md:py-5">
       <span className="text-[11px] md:text-xs tracking-vast text-silver-dim md:col-span-1">
         {index}
       </span>
@@ -26,9 +35,27 @@ function Field({ index, label, children }) {
 export default function OrderInquiry() {
   // idle -> exiting (form fading out) -> sent (confirmation shown)
   const [status, setStatus] = useState("idle");
+  const [colorway, setColorway] = useState(COLORWAYS[0]);
   const exitTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(exitTimer.current), []);
+
+  // Show the customer the bag's colour by wearing it: the choice repaints
+  // the whole page, not just this control. Transitions are suppressed across
+  // the flip (see the colorway block in index.css) and restored two frames
+  // later, once the new palette has painted.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-colorway-swapping", "");
+    root.dataset.colorway = colorway.theme;
+
+    // Read layout to flush the style recalculation while transitions are
+    // still off, so the new palette is adopted outright instead of animated.
+    // Synchronous on purpose: rAF is suspended in a backgrounded tab, which
+    // would leave transitions disabled for as long as the tab stayed hidden.
+    void root.offsetHeight;
+    root.removeAttribute("data-colorway-swapping");
+  }, [colorway]);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -37,7 +64,7 @@ export default function OrderInquiry() {
   };
 
   return (
-    <section id="order" className="rule-b px-6 py-24 md:px-12 md:py-32">
+    <section id="order" data-panel className={PANEL}>
       <div className="max-w-3xl">
         <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
           05 &mdash; Order
@@ -97,7 +124,7 @@ export default function OrderInquiry() {
               />
             </Field>
 
-            <div className="rule-t grid gap-2 py-8 md:grid-cols-12 md:gap-6 md:py-10">
+            <div className="rule-t grid gap-2 py-4 md:grid-cols-12 md:gap-6 md:py-5">
               <span className="text-[11px] md:text-xs tracking-vast text-silver-dim md:col-span-1">
                 03
               </span>
@@ -106,26 +133,35 @@ export default function OrderInquiry() {
                   Preferred Color
                 </span>
                 <div className="mt-4 flex gap-4">
-                  {["Graphite", "Bone"].map((color) => (
+                  {COLORWAYS.map((option) => (
                     <label
-                      key={color}
-                      className="flex cursor-pointer items-center gap-2 border border-silver-dim/40 px-5 py-3 text-sm text-bone transition-colors duration-300 has-[:checked]:border-bone has-[:checked]:bg-bone/10"
+                      key={option.name}
+                      className="flex cursor-pointer items-center gap-3 border border-silver-dim/40 px-5 py-3 text-sm text-bone transition-colors duration-300 has-[:checked]:border-bone has-[:checked]:bg-bone/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-bone"
                     >
                       <input
                         type="radio"
                         name="color"
-                        value={color}
-                        defaultChecked={color === "Graphite"}
-                        className="accent-bone"
+                        value={option.name}
+                        checked={colorway.name === option.name}
+                        onChange={() => setColorway(option)}
+                        className="sr-only"
                       />
-                      {color}
+                      <span
+                        aria-hidden="true"
+                        className="h-4 w-4 rounded-full border border-silver-dim/60"
+                        style={{ backgroundColor: option.swatch }}
+                      />
+                      {option.name}
                     </label>
                   ))}
                 </div>
+                <p className="mt-4 text-[11px] uppercase leading-relaxed tracking-[0.16em] text-silver-dim">
+                  The page takes on the colour you choose.
+                </p>
               </div>
             </div>
 
-            <div className="rule-t pt-10">
+            <div className="rule-t pt-6">
               <button
                 type="submit"
                 className="trace-box trace-box-loop w-full cursor-pointer bg-carbon px-8 py-5 text-xs md:text-[13px] uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-white/5 md:w-auto"

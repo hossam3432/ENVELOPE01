@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 
 const LINKS = [
-  { index: "01", label: "The Manifesto", href: "#blueprint" },
+  { index: "01", label: "The Manifesto", href: "#manifesto" },
   { index: "02", label: "Model 001", href: "#product" },
   { index: "03", label: "The Interior", href: "#interior" },
   { index: "04", label: "Material Truth", href: "#anatomy" },

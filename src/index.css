@@ -1,9 +1,9 @@
 @import "tailwindcss";
 
 @theme {
-  /* ENVELOPE 01 — strict palette: warm graphite + bone, brushed-steel accent */
-  --color-carbon: #221f1c;
-  --color-carbon-soft: #2c2925;
+  /* ENVELOPE 01 — strict palette: black ground + bone, brushed-steel accent */
+  --color-carbon: #000000;
+  --color-carbon-soft: #0d0d0d;
   --color-bone: #f4f1ea;
   --color-bone-dim: #dbd6c9;
   --color-silver: #a8a6a0;
@@ -19,8 +19,25 @@
   --tracking-vast: 0.35em;
 }
 
+/* No native smooth scrolling: useSectionScroll drives the page one panel at
+   a time with its own eased animation, and `scroll-behavior: smooth` would
+   re-animate every frame of it. */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
+}
+
+/* Fallback for anyone the JS scroller stands down for — reduced-motion
+   users still get one panel per gesture, just via native snapping. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: auto;
+  }
+
+  [data-panel] {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
 }
 
 body {
@@ -33,6 +50,33 @@ body {
 ::selection {
   background-color: var(--color-bone);
   color: var(--color-carbon);
+}
+
+/* Colorway. Picking a colour in the order form sets data-colorway on <html>
+   and the whole site repaints — ground and ink trade places. Only the palette
+   variables move; every utility already reads them, so nothing else changes. */
+:root[data-colorway="bone"] {
+  --color-carbon: #f4f1ea;
+  --color-carbon-soft: #e9e3d6;
+  --color-bone: #14120f;
+  --color-bone-dim: #3a3630;
+  --color-silver: #55524b;
+  --color-silver-dim: #6b6961;
+}
+
+/* The swap is instant by design: fading the ground while the ink flips would
+   put black text on a black field for the length of the fade.
+
+   It also has to be instant to be correct. Any element carrying its own
+   transition (every hover state here does) keeps painting the OLD palette
+   when the custom properties change underneath it — Chrome updates the
+   variable but never repaints the transitioning element. So transitions are
+   suppressed for the single frame in which the colourway flips, then handed
+   back, leaving hover animations intact. */
+:root[data-colorway-swapping] *,
+:root[data-colorway-swapping] *::before,
+:root[data-colorway-swapping] *::after {
+  transition: none !important;
 }
 
 /* Outline that traces itself around a box on reveal (see TraceBorder).
