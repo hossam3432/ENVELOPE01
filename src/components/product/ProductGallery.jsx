@@ -9,6 +9,8 @@ import interior from "../../assets/product/04-interior.jpg";
 import base from "../../assets/product/05-base.jpg";
 import handle from "../../assets/product/06-handle.jpg";
 import facet from "../../assets/product/07-facet.jpg";
+import interiorPacked from "../../assets/product/08-interior-packed.jpg";
+import strap from "../../assets/product/09-strap.jpg";
 
 import frontThumb from "../../assets/product/thumb/01-front.jpg";
 import gussetThumb from "../../assets/product/thumb/02-gusset.jpg";
@@ -17,6 +19,8 @@ import interiorThumb from "../../assets/product/thumb/04-interior.jpg";
 import baseThumb from "../../assets/product/thumb/05-base.jpg";
 import handleThumb from "../../assets/product/thumb/06-handle.jpg";
 import facetThumb from "../../assets/product/thumb/07-facet.jpg";
+import interiorPackedThumb from "../../assets/product/thumb/08-interior-packed.jpg";
+import strapThumb from "../../assets/product/thumb/09-strap.jpg";
 
 /* Plates run alongside the Fig. drawings — photographs, not elevations.
    Each note repeats a dimension the site already publishes elsewhere. */
@@ -52,6 +56,14 @@ const PLATES = [
     fit: "contain",
   },
   {
+    src: interiorPacked,
+    thumb: interiorPackedThumb,
+    title: "Interior, Packed",
+    note: "A 16″ laptop, charging gear, and daily carry — all seated, nothing loose.",
+    alt: "The briefcase open and packed on a desk: a laptop in the padded sleeve, cables and a power bank in the mesh pockets, earbuds, a notebook, pen, keys, phone, and a water bottle in the main compartment.",
+    fit: "contain",
+  },
+  {
     src: base,
     thumb: baseThumb,
     title: "Base",
@@ -71,6 +83,14 @@ const PLATES = [
     title: "Facet Corner",
     note: "Creases skived to 0.7 mm at the fold, so they never crack white.",
     alt: "Close detail of a folded corner where three facets meet, with the zip terminating in a leather garage just below.",
+  },
+  {
+    src: strap,
+    thumb: strapThumb,
+    title: "Strap, Detached",
+    note: "20 mm leather, brushed steel swivel clips. Adjusts 850–1350 mm.",
+    alt: "The detachable shoulder strap laid flat: leather with a centre slide adjuster and a brushed steel swivel clip at each end.",
+    fit: "contain",
   },
 ];
 
