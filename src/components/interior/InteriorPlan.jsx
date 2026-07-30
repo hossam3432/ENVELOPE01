@@ -74,7 +74,7 @@ function InteriorPlanSheet({ narrow }) {
       viewBox={narrow ? PLAN_BOX_NARROW : PLAN_BOX}
       role="img"
       aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
-      className="bp-sheet mx-auto block max-h-[46dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[38dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -279,20 +279,20 @@ export default function InteriorPlan() {
           </p>
         </div>
 
-        <div className="mt-8 md:mt-10">
+        <div className="mt-6 md:mt-8">
           <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
             <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
             <p className="hidden md:block">Plan &mdash; Millimetres</p>
           </div>
-          <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-6 w-full max-w-3xl" />
+          <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-4 w-full max-w-3xl" />
 
-          <div className="mt-6">
+          <div className="mt-4">
             <div className="mx-auto w-full max-w-3xl">
               <InteriorPlanSheet narrow={narrow} />
             </div>
           </div>
 
-          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
+          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-4 w-full max-w-3xl" />
         </div>
       </section>
 
@@ -357,14 +357,14 @@ export default function InteriorPlan() {
 
       {/* Front pocket — the one moving part on the bag */}
       <section id="front-pocket" data-panel className={PANEL}>
-      <div className="trace-box bg-carbon px-6 py-12 text-bone md:px-14 md:py-16">
+      <div className="trace-box bg-carbon px-6 py-8 text-bone md:px-14 md:py-10">
         <TraceBorder className="text-bone/25" />
-        <div className="grid gap-10 md:grid-cols-12">
+        <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
               Fig. 13 &mdash; Front Pocket
             </p>
-            <h3 className="mt-4 font-serif text-3xl md:text-4xl">
+            <h3 className="mt-3 font-serif text-3xl md:text-4xl">
               The flap is not decoration.
             </h3>
           </div>
@@ -375,7 +375,7 @@ export default function InteriorPlan() {
               organiser: one tall slot, three card slots, one flat slip,
               110 mm deep.
             </p>
-            <dl className="rule-t mt-8 divide-y divide-silver-dim/15">
+            <dl className="rule-t mt-5 divide-y divide-silver-dim/15">
               {[
                 {
                   label: "Snap",
@@ -393,17 +393,17 @@ export default function InteriorPlan() {
                     "Minimum 40 mm from the card slots, so the magnet never sits against a stripe card or a keycard",
                 },
               ].map((row) => (
-                <div key={row.label} className="py-4">
+                <div key={row.label} className="py-2.5">
                   <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
                     {row.label}
                   </dt>
-                  <dd className="mt-2 text-sm font-light leading-relaxed text-bone">
+                  <dd className="mt-1 text-sm font-light leading-relaxed text-bone">
                     {row.value}
                   </dd>
                 </div>
               ))}
             </dl>
-            <p className="mt-8 text-xs font-light uppercase leading-loose tracking-[0.16em] text-silver-dim">
+            <p className="mt-5 text-xs font-light uppercase leading-loose tracking-[0.16em] text-silver-dim">
               Carry a card and a receipt here. Your phone belongs in the main
               compartment &mdash; that one stays zipped, which is the point
               that matters on a crowded commute.

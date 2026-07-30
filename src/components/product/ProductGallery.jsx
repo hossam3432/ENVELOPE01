@@ -106,9 +106,14 @@ function Plate({ plate, number, className = "" }) {
   return (
     <figure className={className}>
       {/* Padding on the relative box, not the image, so the traced
-          border sits with clearance around the plate instead of hugging it. */}
-      <div className="relative p-3 md:p-4">
-        <div className="aspect-square overflow-hidden bg-carbon-soft">
+          border sits with clearance around the plate instead of hugging it.
+          w-fit lets the box shrink to the (height-driven) square below,
+          instead of stretching to the column and leaving the trace border
+          floating around empty space. */}
+      <div className="relative w-fit mx-auto p-3 md:p-4">
+        {/* Sized off the viewport height, not a fixed width, so the plate
+            never pushes this section past one screen on a short display. */}
+        <div className="aspect-square h-[26dvh] max-h-[360px] min-h-[160px] w-auto max-w-full overflow-hidden bg-carbon-soft">
           <img
             src={plate.src}
             alt={plate.alt}
@@ -126,7 +131,7 @@ function Plate({ plate, number, className = "" }) {
           strokeWidth={0.67}
         />
       </div>
-      <figcaption className="mt-2 text-[11px] uppercase tracking-vast text-silver-dim">
+      <figcaption className="mt-2 text-center text-[11px] uppercase tracking-vast text-silver-dim">
         Pl. {String(number).padStart(2, "0")} &mdash; {plate.title}
       </figcaption>
     </figure>
@@ -165,12 +170,12 @@ export default function ProductGallery() {
         aria-label="Model 001 photographs — use the left and right arrow keys to change plate"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="mx-auto mt-3 w-full max-w-md outline-none focus-visible:[&_.aspect-square]:border-bone/60 md:max-w-lg"
+        className="mx-auto mt-3 w-full outline-none focus-visible:[&_.aspect-square]:border-bone/60"
       >
         <Plate plate={plate} number={index + 1} />
       </div>
 
-      <div className="mt-3 grid grid-cols-7 gap-2">
+      <div className="mt-3 grid grid-cols-9 gap-2">
         {PLATES.map((item, i) => (
           <button
             key={item.src}

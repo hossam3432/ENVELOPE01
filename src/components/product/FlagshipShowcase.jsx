@@ -411,7 +411,7 @@ export default function FlagshipShowcase() {
           </h2>
         </div>
 
-        <div className="mt-6 grid gap-8 md:mt-8 md:grid-cols-2 md:gap-14 lg:grid-cols-5">
+        <div className="mt-4 grid gap-6 md:mt-6 md:grid-cols-2 md:gap-14 lg:grid-cols-5">
           <div className="lg:col-span-3">
             <ProductGallery />
           </div>
@@ -425,11 +425,11 @@ export default function FlagshipShowcase() {
               compartment. Padded 16&Prime; sleeve. Stands on its own.
             </p>
 
-            <dl className="rule-t mt-5 divide-y divide-silver-dim/15">
+            <dl className="rule-t mt-3 divide-y divide-silver-dim/15">
               {SPEC_ITEMS.map((item) => (
                 <div
                   key={item.label}
-                  className="flex items-baseline justify-between gap-4 py-1.5"
+                  className="flex items-baseline justify-between gap-4 py-0.5"
                 >
                   <dt className="shrink-0 text-[11px] uppercase tracking-vast text-silver-dim">
                     {item.label}
@@ -441,17 +441,17 @@ export default function FlagshipShowcase() {
               ))}
             </dl>
 
-            <p className="mt-4 text-[11px] font-light uppercase leading-loose tracking-[0.14em] text-silver-dim">
+            <p className="mt-1 text-[11px] font-light uppercase leading-loose tracking-[0.14em] text-silver-dim">
               All external, in millimetres. Tolerance &plusmn;2 mm.
             </p>
 
-            <div className="mt-6 flex flex-col items-start gap-4">
+            <div className="mt-3 flex flex-col items-start gap-3">
               <p className="font-serif text-2xl text-bone md:text-3xl">
                 6,500 &ndash; 7,000 EGP
               </p>
               <a
                 href="#order"
-                className="inline-block border border-bone/60 px-6 py-3 text-xs uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
+                className="inline-block border border-bone/60 px-6 py-2.5 text-xs uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
               >
                 Request to Order
               </a>
