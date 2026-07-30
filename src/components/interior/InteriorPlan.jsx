@@ -1,6 +1,20 @@
 import TraceBorder from "../ui/TraceBorder.jsx";
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
+import CalloutLegend from "../ui/CalloutLegend.jsx";
+
+// Same five facts the plan's leader lines point out, grouped by where they
+// sit on the sheet — the two top-edge labels above the figure on a phone,
+// the three lower ones below it.
+const CALLOUTS_ABOVE = [
+  { lines: ["PADDED LAPTOP SLEEVE", "370 × 265, 6 MM FOAM"] },
+  { lines: ["CHARCOAL WOVEN LINING"] },
+];
+const CALLOUTS_BELOW = [
+  { lines: ["KEY LEASH"] },
+  { lines: ["ORGANISER PANEL", "LEATHER-FACED"] },
+  { lines: ["ZIPPED VALUABLES", "200 × 150, FRONT WALL"] },
+];
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -266,11 +280,15 @@ export default function InteriorPlan() {
             <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
             <p className="hidden md:block">Plan &mdash; Millimetres</p>
           </div>
+          <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-6 w-full max-w-3xl" />
+
           <div className="mt-6">
             <div className="mx-auto w-full max-w-3xl">
               <InteriorPlanSheet narrow={narrow} />
             </div>
           </div>
+
+          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
         </div>
       </section>
 

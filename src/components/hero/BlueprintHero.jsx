@@ -1,5 +1,20 @@
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
+import CalloutLegend from "../ui/CalloutLegend.jsx";
+
+// Same six facts the drawing's leader lines point out, grouped by where
+// they sit on the sheet — top-of-bag hardware above the figure on a phone,
+// lower-bag detail below it.
+const CALLOUTS_ABOVE = [
+  { lines: ["#8 U-ZIP · TWIN SLIDER"] },
+  { lines: ["D-RING ×2"] },
+  { lines: ["BRUSHED STEEL FITTING"] },
+];
+const CALLOUTS_BELOW = [
+  { lines: ["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"] },
+  { lines: ["STEEL FEET ×4"] },
+  { lines: ["FOUR FOLDED FACETS", "CREASE SKIVED 0.7"] },
+];
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -371,11 +386,15 @@ export default function BlueprintHero() {
           </p>
         </div>
 
-        <div className="mt-8 md:mt-4">
+        <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-8 w-full max-w-3xl" />
+
+        <div className="mt-6 md:mt-4">
           <div className="mx-auto w-full max-w-3xl">
             <ElevationSheet narrow={narrow} />
           </div>
         </div>
+
+        <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
 
         <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-4">
           {QUICK_SPECS.map((spec) => (

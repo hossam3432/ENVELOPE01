@@ -1,6 +1,16 @@
 import ProductGallery from "./ProductGallery.jsx";
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
+import CalloutLegend from "../ui/CalloutLegend.jsx";
+
+// Same three facts the scale reference's leader lines point out, grouped by
+// where they sit on the sheet — the clearance note above the figure on a
+// phone, the two sleeve/laptop notes below it.
+const SCALE_CALLOUTS_ABOVE = [{ lines: ["25 CLEARANCE", "BELOW THE ZIP LINE"] }];
+const SCALE_CALLOUTS_BELOW = [
+  { lines: ["PADDED SLEEVE", "370 × 265, 6 MM FOAM"] },
+  { lines: ["16″ LAPTOP, CLOSED", "356 × 249"] },
+];
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -468,11 +478,16 @@ export default function FlagshipShowcase() {
           <p>Fig. 15 &mdash; Scale Reference</p>
           <p className="hidden md:block">16&Prime; Laptop In Situ</p>
         </div>
+        <CalloutLegend items={SCALE_CALLOUTS_ABOVE} className="mx-auto mt-6 w-full max-w-3xl" />
+
         <div className="mt-6">
           <div className="mx-auto w-full max-w-3xl">
             <ScaleReference narrow={narrow} />
           </div>
         </div>
+
+        <CalloutLegend items={SCALE_CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
+
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
           A closed 16&Prime; laptop is 356 mm wide and 249 mm high. The padded
           sleeve is 370 &times; 265, and the laptop seats 25 mm below the zip
