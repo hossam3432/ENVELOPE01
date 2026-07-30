@@ -1,4 +1,5 @@
 import { PANEL } from "../ui/panel.js";
+import useIsNarrow from "../../hooks/useIsNarrow.js";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -63,10 +64,18 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
   );
 }
 
-function ElevationSheet() {
+/* On a phone the sheet crops to just the drawing — body, handle, and the two
+   dimension lines. The wide margins in the full sheet exist to carry leader
+   callouts and the title block, and at phone width those would render at
+   around 6 CSS pixels. Their information already lives in QUICK_SPECS below
+   the figure, so cropping past them loses nothing. */
+const SHEET_BOX = "0 0 720 640";
+const SHEET_BOX_NARROW = "130 78 480 444";
+
+function ElevationSheet({ narrow }) {
   return (
     <svg
-      viewBox="0 0 720 640"
+      viewBox={narrow ? SHEET_BOX_NARROW : SHEET_BOX}
       role="img"
       aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
       className="mx-auto block max-h-[58dvh] w-full text-silver"
@@ -345,6 +354,8 @@ const QUICK_SPECS = [
 ];
 
 export default function BlueprintHero() {
+  const narrow = useIsNarrow();
+
   return (
     <>
       {/* Panel 1 — the drawing */}
@@ -360,11 +371,9 @@ export default function BlueprintHero() {
           </p>
         </div>
 
-        {/* Below md the sheet would shrink its callouts to nothing, so it
-            keeps a legible minimum width and scrolls sideways instead. */}
-        <div className="-mx-6 mt-8 overflow-x-auto px-6 md:mx-0 md:mt-4 md:overflow-visible md:px-0">
-          <div className="mx-auto w-full max-w-3xl min-w-[600px]">
-            <ElevationSheet />
+        <div className="mt-8 md:mt-4">
+          <div className="mx-auto w-full max-w-3xl">
+            <ElevationSheet narrow={narrow} />
           </div>
         </div>
 

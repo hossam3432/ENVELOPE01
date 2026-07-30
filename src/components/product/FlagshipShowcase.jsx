@@ -1,5 +1,6 @@
 import ProductGallery from "./ProductGallery.jsx";
 import { PANEL } from "../ui/panel.js";
+import useIsNarrow from "../../hooks/useIsNarrow.js";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -187,11 +188,18 @@ function GussetElevation() {
 }
 
 /* View 15 — scale reference, 0.7 px per mm. The 16″ laptop is drawn as a
-   hidden outline inside the bag: 356 × 249 closed, seated 25 below the zip. */
-function ScaleReference() {
+   hidden outline inside the bag: 356 × 249 closed, seated 25 below the zip.
+
+   On a phone the sheet crops to the body and the width dimension — the
+   three leader callouts exist to label facts the paragraph below the figure
+   already states in full. */
+const SCALE_BOX = "0 0 720 370";
+const SCALE_BOX_NARROW = "160 15 400 360";
+
+function ScaleReference({ narrow }) {
   return (
     <svg
-      viewBox="0 0 720 370"
+      viewBox={narrow ? SCALE_BOX_NARROW : SCALE_BOX}
       role="img"
       aria-label="Scale reference: a closed 16-inch laptop, 356 by 249 millimetres, shown as a hidden outline inside the 420 by 310 millimetre body, seated 25 millimetres below the zip line."
       className="mx-auto block max-h-[52dvh] w-full text-silver"
@@ -374,6 +382,8 @@ const SPEC_ITEMS = [
 ];
 
 export default function FlagshipShowcase() {
+  const narrow = useIsNarrow();
+
   return (
     <>
       {/* The product itself — plates and the numbers side by side */}
@@ -458,9 +468,9 @@ export default function FlagshipShowcase() {
           <p>Fig. 15 &mdash; Scale Reference</p>
           <p className="hidden md:block">16&Prime; Laptop In Situ</p>
         </div>
-        <div className="-mx-6 mt-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
-          <div className="mx-auto w-full max-w-3xl min-w-[600px]">
-            <ScaleReference />
+        <div className="mt-6">
+          <div className="mx-auto w-full max-w-3xl">
+            <ScaleReference narrow={narrow} />
           </div>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
@@ -477,8 +487,8 @@ export default function FlagshipShowcase() {
           <p>Fig. 12 &mdash; Strap, Laid Flat</p>
           <p className="hidden md:block">Detachable</p>
         </div>
-        <div className="-mx-6 mt-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
-          <div className="mx-auto w-full max-w-3xl min-w-[560px]">
+        <div className="mt-6">
+          <div className="mx-auto w-full max-w-3xl">
             <StrapFlat />
           </div>
         </div>

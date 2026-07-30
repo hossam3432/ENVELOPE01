@@ -1,5 +1,6 @@
 import TraceBorder from "../ui/TraceBorder.jsx";
 import { PANEL } from "../ui/panel.js";
+import useIsNarrow from "../../hooks/useIsNarrow.js";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
@@ -45,11 +46,18 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
 }
 
 /* View 5 — top down, zip fully open. Drawn at 1.2 px per mm, so the
-   420 × 140 mouth is 504 × 168 units. */
-function InteriorPlanSheet() {
+   420 × 140 mouth is 504 × 168 units.
+
+   On a phone the sheet crops to the mouth and its two dimension lines —
+   the five leader callouts ringing it exist to label surfaces the SURFACES
+   and POCKETS tables below already spell out in full sentences. */
+const PLAN_BOX = "0 0 720 360";
+const PLAN_BOX_NARROW = "80 20 610 260";
+
+function InteriorPlanSheet({ narrow }) {
   return (
     <svg
-      viewBox="0 0 720 360"
+      viewBox={narrow ? PLAN_BOX_NARROW : PLAN_BOX}
       role="img"
       aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
       className="mx-auto block max-h-[46dvh] w-full text-silver"
@@ -232,6 +240,8 @@ const CLEAR_DIMS = [
 ];
 
 export default function InteriorPlan() {
+  const narrow = useIsNarrow();
+
   return (
     <>
       {/* The plan, and why the interior is built this way */}
@@ -256,9 +266,9 @@ export default function InteriorPlan() {
             <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
             <p className="hidden md:block">Plan &mdash; Millimetres</p>
           </div>
-          <div className="-mx-6 mt-6 overflow-x-auto px-6 md:mx-0 md:overflow-visible md:px-0">
-            <div className="mx-auto w-full max-w-3xl min-w-[600px]">
-              <InteriorPlanSheet />
+          <div className="mt-6">
+            <div className="mx-auto w-full max-w-3xl">
+              <InteriorPlanSheet narrow={narrow} />
             </div>
           </div>
         </div>
