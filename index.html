@@ -3,23 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ENVELOPE 01 — Engineered Form</title>
-    <meta
-      name="description"
-      content="ENVELOPE 01. Model 001, the folded briefcase. 420 × 310 × 140 mm, full-grain leather, brushed steel, U-zip. Structural leather objects, engineered in Egypt."
-    />
-    <link rel="canonical" href="https://envelope01.com/" />
+    <!--
+      title/description/canonical/robots/og:*/twitter:* are intentionally
+      omitted here — src/seo/SEO.jsx (backed by src/seo/meta.ts) renders them
+      per-route via react-helmet-async, and scripts/prerender.mjs bakes the
+      resulting <head> into dist/index.html at build time. This static
+      fallback title only covers the pre-hydration flash / dev server.
+    -->
+    <title>ENVELOPE — Structured Leather Work Briefcase | Cairo</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#000000" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="ENVELOPE 01" />
-    <meta property="og:title" content="ENVELOPE 01 — Engineered Form" />
-    <meta property="og:url" content="https://envelope01.com/" />
-    <meta
-      property="og:description"
-      content="Model 001, the folded briefcase. 420 × 310 × 140 mm, full-grain leather, brushed steel, U-zip. Structural leather objects, engineered in Egypt."
-    />
-    <meta name="twitter:card" content="summary_large_image" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link

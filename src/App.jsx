@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SEO from "./seo/SEO.jsx";
 import Header from "./components/layout/Header.jsx";
 import MenuOverlay from "./components/layout/MenuOverlay.jsx";
 import BlueprintHero from "./components/hero/BlueprintHero.jsx";
@@ -21,6 +22,7 @@ export default function App() {
 
   return (
     <div id="top" className="relative min-h-screen bg-carbon text-bone">
+      <SEO />
       <Header
         menuOpen={menuOpen}
         onToggleMenu={() => setMenuOpen((v) => !v)}
