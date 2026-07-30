@@ -83,8 +83,10 @@ const PLATES = [
 function Plate({ plate, number, className = "" }) {
   return (
     <figure className={className}>
-      <div className="relative">
-        <div className="aspect-square max-h-[34dvh] overflow-hidden bg-carbon-soft">
+      {/* Padding on the relative box, not the image, so the traced
+          border sits with clearance around the plate instead of hugging it. */}
+      <div className="relative p-3 md:p-4">
+        <div className="aspect-square overflow-hidden bg-carbon-soft">
           <img
             src={plate.src}
             alt={plate.alt}
@@ -111,10 +113,6 @@ export default function ProductGallery() {
   const [index, setIndex] = useState(0);
   const plate = PLATES[index];
 
-  // The pair advances together: pick a plate and its neighbour comes with it.
-  const pairIndex = (index + 1) % PLATES.length;
-  const pairPlate = PLATES[pairIndex];
-
   const step = (delta) =>
     setIndex((i) => (i + delta + PLATES.length) % PLATES.length);
 
@@ -137,20 +135,15 @@ export default function ProductGallery() {
         </p>
       </div>
 
-      {/* Two plates side by side from lg up, one below it. */}
+      {/* One large plate, centered above the thumbnail strip. */}
       <div
         role="group"
         aria-label="Model 001 photographs — use the left and right arrow keys to change plate"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="mt-3 grid gap-3 outline-none focus-visible:[&_.aspect-square]:border-bone/60 lg:grid-cols-2"
+        className="mx-auto mt-3 w-full max-w-md outline-none focus-visible:[&_.aspect-square]:border-bone/60 md:max-w-lg"
       >
         <Plate plate={plate} number={index + 1} />
-        <Plate
-          plate={pairPlate}
-          number={pairIndex + 1}
-          className="hidden lg:block"
-        />
       </div>
 
       <div className="mt-3 grid grid-cols-7 gap-2">
