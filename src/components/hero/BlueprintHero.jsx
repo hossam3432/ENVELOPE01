@@ -1,5 +1,6 @@
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
+import useIsWide from "../../hooks/useIsWide.js";
 import CalloutLegend from "../ui/CalloutLegend.jsx";
 
 // Same six facts the drawing's leader lines point out, grouped by where
@@ -84,16 +85,24 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
    callouts and the title block, and at phone width those would render at
    around 6 CSS pixels. Their information already lives in QUICK_SPECS below
    the figure, so cropping past them loses nothing. */
-const SHEET_BOX = "0 0 720 640";
+const SHEET_H_FULL = 640;
+const SHEET_H_WIDE = 530;
+const SHEET_BOX = `0 0 720 ${SHEET_H_FULL}`;
+const SHEET_BOX_WIDE = `0 0 720 ${SHEET_H_WIDE}`;
 const SHEET_BOX_NARROW = "130 78 480 444";
 
-function ElevationSheet({ narrow }) {
+/* At lg the title block moves out into flanking HTML columns (see
+   TitleBlockDetails below), so the sheet crops off the now-empty band it
+   used to occupy — the drawing itself fills a taller share of the
+   viewBox as a result. The two bottom registration marks move with it. */
+function ElevationSheet({ narrow, wide }) {
+  const sheetH = wide ? SHEET_H_WIDE : SHEET_H_FULL;
   return (
     <svg
-      viewBox={narrow ? SHEET_BOX_NARROW : SHEET_BOX}
+      viewBox={narrow ? SHEET_BOX_NARROW : wide ? SHEET_BOX_WIDE : SHEET_BOX}
       role="img"
       aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
-      className="bp-sheet mx-auto block max-h-[58dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[58dvh] w-full text-silver lg:max-h-[68dvh]"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -102,8 +111,8 @@ function ElevationSheet({ narrow }) {
       <g className="bp-fade" style={delay(0)} strokeWidth="1">
         <path d="M16 32 V16 H32" />
         <path d="M688 16 H704 V32" />
-        <path d="M704 608 V624 H688" />
-        <path d="M32 624 H16 V608" />
+        <path d={`M704 ${sheetH - 32} V${sheetH - 16} H688`} />
+        <path d={`M32 ${sheetH - 16} H16 V${sheetH - 32}`} />
       </g>
 
       {/* Centre lines — dash-dot, drafting convention */}
@@ -284,8 +293,10 @@ function ElevationSheet({ narrow }) {
         </>
       )}
 
-      {/* Title block — off-sheet at phone width, cropped along with the callouts */}
-      {!narrow && (
+      {/* Title block — cropped out at phone width (with the callouts) and at
+          lg+, where the same information lives in the flanking HTML column
+          (TitleBlockDetails) instead, freeing this sheet to crop tighter. */}
+      {!narrow && !wide && (
       <g className="bp-fade" style={delay(3.8)} strokeWidth="0.8">
         <path d="M40 524 H690 V600 H40 Z" />
         <path d="M150 524 V600" />
@@ -372,10 +383,32 @@ const QUICK_SPECS = [
   { label: "Volume", value: "≈18 L" },
   { label: "Weight", value: "1.15–1.30 kg" },
   { label: "Fits", value: "16″ laptop" },
+  { label: "Leather", value: "Full-grain 1.2–1.4mm" },
 ];
+
+/* HTML twin of the SVG's title block, shown only at lg+ once the drawing
+   stops carrying that text itself (see the `wide` crop in ElevationSheet). */
+function TitleBlockDetails({ className = "" }) {
+  return (
+    <div className={className}>
+      <p className="text-[11px] uppercase tracking-vast text-silver-dim">
+        Model
+      </p>
+      <p className="mt-2 font-serif text-5xl text-bone" style={{ letterSpacing: "0.16em" }}>
+        001
+      </p>
+      <div className="mt-8 text-[11px] uppercase leading-relaxed tracking-[0.14em]">
+        <p className="text-silver">Folded Briefcase</p>
+        <p className="mt-1 text-silver-dim">View 1 — Front Elevation</p>
+        <p className="text-silver-dim">Dimensions in mm · Tol ±2</p>
+      </div>
+    </div>
+  );
+}
 
 export default function BlueprintHero() {
   const narrow = useIsNarrow();
+  const wide = useIsWide();
 
   return (
     <>
@@ -394,26 +427,31 @@ export default function BlueprintHero() {
 
         <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-8 w-full max-w-3xl" />
 
-        <div className="mt-6 md:mt-4">
-          <div className="mx-auto w-full max-w-3xl">
-            <ElevationSheet narrow={narrow} />
+        <div className="mt-6 md:mt-4 lg:mt-8 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center">
+          <TitleBlockDetails className="hidden lg:block lg:w-48 lg:mx-2 xl:mx-3" />
+
+          <div className="mx-auto w-full max-w-3xl lg:max-w-none">
+            <ElevationSheet narrow={narrow} wide={wide} />
           </div>
+
+          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
+
+          <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-5 lg:mx-0 lg:ml-2 xl:ml-3 lg:mt-0 lg:block lg:w-48 lg:max-w-none lg:space-y-6 lg:border-t-0 lg:pt-0">
+            {QUICK_SPECS.map((spec) => (
+              <div
+                key={spec.label}
+                className="lg:border-t lg:border-silver-dim/20 lg:pt-5 lg:first:border-t-0 lg:first:pt-0"
+              >
+                <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
+                  {spec.label}
+                </dt>
+                <dd className="mt-2 font-serif text-lg text-bone md:text-xl">
+                  {spec.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
         </div>
-
-        <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
-
-        <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-4">
-          {QUICK_SPECS.map((spec) => (
-            <div key={spec.label}>
-              <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
-                {spec.label}
-              </dt>
-              <dd className="mt-2 font-serif text-lg text-bone md:text-xl">
-                {spec.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
       </section>
 
       {/* Panel 2 — the headline */}

@@ -42,9 +42,25 @@ html {
 
 body {
   background-color: var(--color-carbon);
+  background-image: radial-gradient(
+    650px circle at var(--mx, 50vw) var(--my, 50vh),
+    color-mix(in srgb, var(--color-silver) 22%, transparent),
+    transparent 70%
+  );
+  background-attachment: fixed;
   color: var(--color-bone);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    background-image: radial-gradient(
+      650px circle at 50vw 50vh,
+      color-mix(in srgb, var(--color-silver) 22%, transparent),
+      transparent 70%
+    );
+  }
 }
 
 ::selection {

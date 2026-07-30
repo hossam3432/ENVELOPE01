@@ -10,12 +10,14 @@ import CookieConsent from "./components/consent/CookieConsent.jsx";
 import { OPEN_PREFERENCES_EVENT } from "./hooks/useConsent.js";
 import useDrawReveal from "./hooks/useDrawReveal.js";
 import useSectionScroll from "./hooks/useSectionScroll.js";
+import useMouseSpotlight from "./hooks/useMouseSpotlight.js";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   useDrawReveal();
   useSectionScroll();
+  useMouseSpotlight();
 
   return (
     <div id="top" className="relative min-h-screen bg-carbon text-bone">
