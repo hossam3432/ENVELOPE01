@@ -234,11 +234,21 @@ body {
 .bp-draw {
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  animation: bp-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 .bp-fade {
   opacity: 0;
+}
+
+/* Held until the sheet itself scrolls into view — see useDrawReveal,
+   which adds `is-drawn` to `.bp-sheet` via IntersectionObserver. Without
+   this gate every diagram on the page would draw itself at once, on
+   mount, well before the user ever scrolls down to see it. */
+.bp-sheet.is-drawn .bp-draw {
+  animation: bp-draw 1.6s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.bp-sheet.is-drawn .bp-fade {
   animation: bp-fade 0.9s ease forwards;
 }
 

@@ -75,7 +75,7 @@ function GussetElevation() {
       viewBox="0 0 400 400"
       role="img"
       aria-label="Right gusset elevation: 140 millimetre depth, zip running 90 millimetres down from the top edge to a leather garage above the facet fold line, D-ring at the top, two of the four steel feet visible."
-      className="mx-auto block max-h-[52dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[52dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.1"
@@ -212,7 +212,7 @@ function ScaleReference({ narrow }) {
       viewBox={narrow ? SCALE_BOX_NARROW : SCALE_BOX}
       role="img"
       aria-label="Scale reference: a closed 16-inch laptop, 356 by 249 millimetres, shown as a hidden outline inside the 420 by 310 millimetre body, seated 25 millimetres below the zip line."
-      className="mx-auto block max-h-[52dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[52dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -317,7 +317,7 @@ function StrapFlat() {
       viewBox="0 0 720 150"
       role="img"
       aria-label="The detachable shoulder strap laid flat: 20 millimetres wide, brushed steel swivel clip at each end, centre slide adjuster, adjusting from 850 to 1350 millimetres."
-      className="w-full text-silver"
+      className="bp-sheet w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
@@ -445,7 +445,7 @@ export default function FlagshipShowcase() {
               All external, in millimetres. Tolerance &plusmn;2 mm.
             </p>
 
-            <div className="mt-6 flex flex-wrap items-center gap-6">
+            <div className="mt-6 flex flex-col items-start gap-4">
               <p className="font-serif text-2xl text-bone md:text-3xl">
                 6,500 &ndash; 7,000 EGP
               </p>

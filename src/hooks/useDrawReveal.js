@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 
-// Horizontal rules and traced button borders both draw themselves on reveal.
-const DRAW_SELECTOR = ".rule-t, .rule-b, .trace-box";
+// Horizontal rules, traced button borders, and the blueprint diagrams all
+// draw themselves on reveal.
+const DRAW_SELECTOR = ".rule-t, .rule-b, .trace-box, .bp-sheet";
 
 /**
  * Adds `is-drawn` to any self-drawing element once it scrolls into view.

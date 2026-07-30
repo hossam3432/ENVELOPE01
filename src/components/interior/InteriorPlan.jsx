@@ -74,7 +74,7 @@ function InteriorPlanSheet({ narrow }) {
       viewBox={narrow ? PLAN_BOX_NARROW : PLAN_BOX}
       role="img"
       aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
-      className="mx-auto block max-h-[46dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[46dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"

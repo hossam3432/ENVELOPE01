@@ -34,6 +34,7 @@ const PLATES = [
     title: "Right Gusset",
     note: "140 deep. The zip runs 90 down, D-ring above the fold line.",
     alt: "The briefcase seen from the right side: a 140 millimetre gusset, the metal zip turning down from the top edge, a brushed steel D-ring on a leather tab.",
+    fit: "contain",
   },
   {
     src: top,
@@ -48,6 +49,7 @@ const PLATES = [
     title: "Interior, Zip Open",
     note: "Padded 16″ sleeve, 370 × 265. Cotton canvas lining throughout.",
     alt: "The briefcase from above with the zip fully open, showing the cotton canvas lining, the padded laptop sleeve across the back wall and a slim card pocket on the right.",
+    fit: "contain",
   },
   {
     src: base,
@@ -93,7 +95,9 @@ function Plate({ plate, number, className = "" }) {
             width="1400"
             height="1875"
             decoding="async"
-            className="h-full w-full object-cover object-center"
+            className={`h-full w-full object-center ${
+              plate.fit === "contain" ? "object-contain" : "object-cover"
+            }`}
           />
         </div>
         <TraceBorder

@@ -93,7 +93,7 @@ function ElevationSheet({ narrow }) {
       viewBox={narrow ? SHEET_BOX_NARROW : SHEET_BOX}
       role="img"
       aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
-      className="mx-auto block max-h-[58dvh] w-full text-silver"
+      className="bp-sheet mx-auto block max-h-[58dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
