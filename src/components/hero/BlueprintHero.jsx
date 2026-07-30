@@ -230,57 +230,62 @@ function ElevationSheet({ narrow }) {
         </text>
       </g>
 
-      <Callout
-        at={3.2}
-        leader="M240 176 L200 126 L20 126"
-        dot={[240, 176]}
-        x={20}
-        y={118}
-        lines={["#8 U-ZIP · TWIN SLIDER"]}
-      />
-      <Callout
-        at={3.3}
-        leader="M168 200 L110 170 L20 170"
-        dot={[174, 204]}
-        x={20}
-        y={162}
-        lines={["D-RING ×2"]}
-      />
-      <Callout
-        at={3.4}
-        leader={`M352 ${CY} L160 262 L20 262`}
-        dot={[352, CY]}
-        x={20}
-        y={236}
-        lines={["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"]}
-      />
-      <Callout
-        at={3.6}
-        leader="M200 449 L120 466 L20 466"
-        dot={[200, 449]}
-        x={20}
-        y={458}
-        lines={["STEEL FEET ×4"]}
-      />
-      <Callout
-        at={3.45}
-        leader="M431 172 L510 112 L700 112"
-        dot={[428, 174]}
-        x={700}
-        y={104}
-        anchor="end"
-        lines={["BRUSHED STEEL FITTING"]}
-      />
-      <Callout
-        at={3.55}
-        leader="M270 375 L120 420 L20 420"
-        dot={[270, 375]}
-        x={20}
-        y={385}
-        lines={["FOUR FOLDED FACETS", "CREASE SKIVED 0.7"]}
-      />
+      {!narrow && (
+        <>
+          <Callout
+            at={3.2}
+            leader="M240 176 L200 126 L20 126"
+            dot={[240, 176]}
+            x={20}
+            y={118}
+            lines={["#8 U-ZIP · TWIN SLIDER"]}
+          />
+          <Callout
+            at={3.3}
+            leader="M168 200 L110 170 L20 170"
+            dot={[174, 204]}
+            x={20}
+            y={162}
+            lines={["D-RING ×2"]}
+          />
+          <Callout
+            at={3.4}
+            leader={`M352 ${CY} L160 262 L20 262`}
+            dot={[352, CY]}
+            x={20}
+            y={236}
+            lines={["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"]}
+          />
+          <Callout
+            at={3.6}
+            leader="M200 449 L120 466 L20 466"
+            dot={[200, 449]}
+            x={20}
+            y={458}
+            lines={["STEEL FEET ×4"]}
+          />
+          <Callout
+            at={3.45}
+            leader="M431 172 L510 112 L700 112"
+            dot={[428, 174]}
+            x={700}
+            y={104}
+            anchor="end"
+            lines={["BRUSHED STEEL FITTING"]}
+          />
+          <Callout
+            at={3.55}
+            leader="M270 375 L120 420 L20 420"
+            dot={[270, 375]}
+            x={20}
+            y={385}
+            lines={["FOUR FOLDED FACETS", "CREASE SKIVED 0.7"]}
+          />
+        </>
+      )}
 
-      {/* Title block */}
+      {/* Title block — off-sheet at phone width, cropped along with the callouts */}
+      {!narrow && (
       <g className="bp-fade" style={delay(3.8)} strokeWidth="0.8">
         <path d="M40 524 H690 V600 H40 Z" />
         <path d="M150 524 V600" />
@@ -357,6 +362,7 @@ function ElevationSheet({ narrow }) {
           </tspan>
         </text>
       </g>
+      )}
     </svg>
   );
 }

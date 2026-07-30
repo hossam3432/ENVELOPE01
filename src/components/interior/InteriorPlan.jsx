@@ -182,48 +182,52 @@ function InteriorPlanSheet({ narrow }) {
         </text>
       </g>
 
-      <Callout
-        at={2.0}
-        leader="M200 110 L140 40 L20 40"
-        dot={[200, 110]}
-        x={20}
-        y={19}
-        lines={["PADDED LAPTOP SLEEVE", "370 × 265, 6 MM FOAM"]}
-      />
-      <Callout
-        at={2.1}
-        leader="M200 238 L140 306 L20 306"
-        dot={[200, 238]}
-        x={20}
-        y={285}
-        lines={["ORGANISER PANEL", "LEATHER-FACED"]}
-      />
-      <Callout
-        at={2.2}
-        leader="M133 168 L70 206 L20 206"
-        dot={[133, 168]}
-        x={20}
-        y={198}
-        lines={["KEY LEASH"]}
-      />
-      <Callout
-        at={2.25}
-        leader="M470 254 L560 322 L700 322"
-        dot={[470, 254]}
-        x={700}
-        y={301}
-        anchor="end"
-        lines={["ZIPPED VALUABLES", "200 × 150, FRONT WALL"]}
-      />
-      <Callout
-        at={2.3}
-        leader="M604 140 L656 40 L700 40"
-        dot={[604, 140]}
-        x={700}
-        y={32}
-        anchor="end"
-        lines={["CHARCOAL WOVEN LINING"]}
-      />
+      {!narrow && (
+        <>
+          <Callout
+            at={2.0}
+            leader="M200 110 L140 40 L20 40"
+            dot={[200, 110]}
+            x={20}
+            y={19}
+            lines={["PADDED LAPTOP SLEEVE", "370 × 265, 6 MM FOAM"]}
+          />
+          <Callout
+            at={2.1}
+            leader="M200 238 L140 306 L20 306"
+            dot={[200, 238]}
+            x={20}
+            y={285}
+            lines={["ORGANISER PANEL", "LEATHER-FACED"]}
+          />
+          <Callout
+            at={2.2}
+            leader="M133 168 L70 206 L20 206"
+            dot={[133, 168]}
+            x={20}
+            y={198}
+            lines={["KEY LEASH"]}
+          />
+          <Callout
+            at={2.25}
+            leader="M470 254 L560 322 L700 322"
+            dot={[470, 254]}
+            x={700}
+            y={301}
+            anchor="end"
+            lines={["ZIPPED VALUABLES", "200 × 150, FRONT WALL"]}
+          />
+          <Callout
+            at={2.3}
+            leader="M604 140 L656 40 L700 40"
+            dot={[604, 140]}
+            x={700}
+            y={32}
+            anchor="end"
+            lines={["CHARCOAL WOVEN LINING"]}
+          />
+        </>
+      )}
     </svg>
   );
 }

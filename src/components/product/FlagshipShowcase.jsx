@@ -276,31 +276,35 @@ function ScaleReference({ narrow }) {
         </text>
       </g>
 
-      <Callout
-        at={2.1}
-        leader="M300 99 L180 120 L20 120"
-        dot={[300, 99]}
-        x={20}
-        y={99}
-        lines={["25 CLEARANCE", "BELOW THE ZIP LINE"]}
-      />
-      <Callout
-        at={2.2}
-        leader="M233 210 L160 240 L20 240"
-        dot={[233, 210]}
-        x={20}
-        y={219}
-        lines={["PADDED SLEEVE", "370 × 265, 6 MM FOAM"]}
-      />
-      <Callout
-        at={2.3}
-        leader="M482 230 L560 255 L700 255"
-        dot={[482, 230]}
-        x={700}
-        y={234}
-        anchor="end"
-        lines={["16″ LAPTOP, CLOSED", "356 × 249"]}
-      />
+      {!narrow && (
+        <>
+          <Callout
+            at={2.1}
+            leader="M300 99 L180 120 L20 120"
+            dot={[300, 99]}
+            x={20}
+            y={99}
+            lines={["25 CLEARANCE", "BELOW THE ZIP LINE"]}
+          />
+          <Callout
+            at={2.2}
+            leader="M233 210 L160 240 L20 240"
+            dot={[233, 210]}
+            x={20}
+            y={219}
+            lines={["PADDED SLEEVE", "370 × 265, 6 MM FOAM"]}
+          />
+          <Callout
+            at={2.3}
+            leader="M482 230 L560 255 L700 255"
+            dot={[482, 230]}
+            x={700}
+            y={234}
+            anchor="end"
+            lines={["16″ LAPTOP, CLOSED", "356 × 249"]}
+          />
+        </>
+      )}
     </svg>
   );
 }
