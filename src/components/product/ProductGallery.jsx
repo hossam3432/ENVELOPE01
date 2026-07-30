@@ -36,8 +36,8 @@ const PLATES = [
     src: gusset,
     thumb: gussetThumb,
     title: "Right Gusset",
-    note: "140 deep. The zip runs 90 down, D-ring above the fold line.",
-    alt: "The briefcase seen from the right side: a 140 millimetre gusset, the metal zip turning down from the top edge, a brushed steel D-ring on a leather tab.",
+    note: "120 deep. The zip runs 15 down, D-ring above the fold line.",
+    alt: "The briefcase seen from the right side: a 120 millimetre gusset, the metal zip turning down from the top edge, a brushed steel D-ring on a leather tab.",
     fit: "contain",
   },
   {
@@ -88,7 +88,7 @@ const PLATES = [
     src: strap,
     thumb: strapThumb,
     title: "Strap, Detached",
-    note: "20 mm leather, brushed steel swivel clips. Adjusts 850–1350 mm.",
+    note: "18 mm leather, brushed steel swivel clips. Adjusts 850–1350 mm.",
     alt: "The detachable shoulder strap laid flat: leather with a centre slide adjuster and a brushed steel swivel clip at each end.",
     fit: "contain",
   },
@@ -113,7 +113,7 @@ function Plate({ plate, number, className = "" }) {
       <div className="relative w-fit mx-auto p-3 md:p-4">
         {/* Sized off the viewport height, not a fixed width, so the plate
             never pushes this section past one screen on a short display. */}
-        <div className="aspect-square h-[26dvh] max-h-[360px] min-h-[160px] w-auto max-w-full overflow-hidden bg-carbon-soft">
+        <div className="aspect-square h-[26dvh] max-h-[360px] min-h-[160px] w-auto max-w-full overflow-hidden bg-carbon-soft lg:h-[46dvh] lg:max-h-[600px]">
           <img
             src={plate.src}
             alt={plate.alt}

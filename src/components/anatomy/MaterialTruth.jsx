@@ -4,7 +4,7 @@ import { PANEL } from "../ui/panel.js";
 const SPECS = [
   {
     label: "Substance",
-    value: "1.2–1.4mm full-grain leather, matte.",
+    value: "1.2mm full-grain leather, matte.",
     truth: "Ages naturally. Never peels.",
   },
   {
@@ -14,13 +14,13 @@ const SPECS = [
   },
   {
     label: "Structure",
-    value: "No rigid board — 140mm gusset, reinforced flat base.",
+    value: "No rigid board — 120mm gusset, reinforced flat base.",
     truth: "Stands unaided when empty.",
   },
   {
     label: "Closure",
     value: "#8 metal U-zip, ≈600mm track, twin sliders.",
-    truth: "90mm down each gusset. Opens from either end.",
+    truth: "15mm down each gusset. Opens from either end.",
   },
   {
     label: "Hardware",

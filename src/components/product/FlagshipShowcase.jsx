@@ -68,19 +68,19 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
 }
 
 /* View 3 — right gusset, drawn at 0.7 px per mm.
-   140 deep × 310 high, zip running 90 down from the top edge. */
+   120 deep × 310 high, zip running 15 down from the top edge. */
 function GussetElevation() {
   return (
     <svg
       viewBox="0 0 400 400"
       role="img"
-      aria-label="Right gusset elevation: 140 millimetre depth, zip running 90 millimetres down from the top edge to a leather garage above the facet fold line, D-ring at the top, two of the four steel feet visible."
+      aria-label="Right gusset elevation: 120 millimetre depth, zip running 15 millimetres down from the top edge to a leather garage above the facet fold line, D-ring at the top, two of the four steel feet visible."
       className="bp-sheet mx-auto block max-h-[52dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.1"
     >
-      {/* Gusset silhouette — 140 × 310. The envelope facets fold over the
+      {/* Gusset silhouette — 120 × 310. The envelope facets fold over the
           top, so the profile tapers to the zip crown rather than squaring off. */}
       <path
         className="bp-draw"
@@ -97,7 +97,7 @@ function GussetElevation() {
         d="M195 90 V27 A5 5 0 0 1 205 27 V90"
       />
 
-      {/* Zip run down the gusset — 90, terminating in a leather garage */}
+      {/* Zip run down the gusset — 15, terminating in a leather garage */}
       <g className="bp-fade" style={delay(1.0)} strokeWidth="0.9">
         <path d="M200 90 V153" />
         <rect x="195" y="153" width="10" height="12" rx="2" />
@@ -125,7 +125,7 @@ function GussetElevation() {
         <path d="M130 313 H270" opacity="0.5" />
       </g>
 
-      {/* 90 zip run */}
+      {/* 15 zip run */}
       <g className="bp-fade" style={delay(1.6)} strokeWidth="0.8">
         <path d="M132 90 V153" />
         <path d="M126 90 H138" />
@@ -138,7 +138,7 @@ function GussetElevation() {
           stroke="none"
           style={NOTE}
         >
-          90
+          15
         </text>
       </g>
 
@@ -160,7 +160,7 @@ function GussetElevation() {
         </text>
       </g>
 
-      {/* 140 depth */}
+      {/* 120 depth */}
       <g className="bp-fade" style={delay(1.7)} strokeWidth="0.8">
         <path d="M151 340 H249" />
         <path d="M151 334 V346" />
@@ -173,7 +173,7 @@ function GussetElevation() {
           stroke="none"
           style={DIM}
         >
-          140
+          120
         </text>
       </g>
 
@@ -309,14 +309,14 @@ function ScaleReference({ narrow }) {
   );
 }
 
-/* View 12 — the detachable strap, laid flat. 20 wide, swivel clip at each
+/* View 12 — the detachable strap, laid flat. 18 wide, swivel clip at each
    end, centre slide adjuster, adjusting 850–1350. */
 function StrapFlat() {
   return (
     <svg
       viewBox="0 0 720 150"
       role="img"
-      aria-label="The detachable shoulder strap laid flat: 20 millimetres wide, brushed steel swivel clip at each end, centre slide adjuster, adjusting from 850 to 1350 millimetres."
+      aria-label="The detachable shoulder strap laid flat: 18 millimetres wide, brushed steel swivel clip at each end, centre slide adjuster, adjusting from 850 to 1350 millimetres."
       className="bp-sheet w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -363,7 +363,7 @@ function StrapFlat() {
         </text>
       </g>
 
-      {/* 20 wide */}
+      {/* 18 wide */}
       <g className="bp-fade" style={delay(1.5)} strokeWidth="0.8">
         <path d="M200 53 L160 24 L40 24" />
         <circle cx="200" cy="53" r="2.5" fill="currentColor" stroke="none" />
@@ -374,7 +374,7 @@ function StrapFlat() {
           stroke="none"
           style={CALLOUT}
         >
-          20 WIDE
+          18 WIDE
         </text>
       </g>
     </svg>
@@ -382,16 +382,16 @@ function StrapFlat() {
 }
 
 const SPEC_ITEMS = [
-  { label: "External", value: "420 × 310 × 140 mm" },
+  { label: "External", value: "420 × 310 × 120 mm" },
   { label: "Volume", value: "≈18 L" },
   { label: "Weight", value: "1.15–1.30 kg, empty" },
   { label: "Fit", value: "16″ laptop, upright" },
   { label: "Closure", value: "#8 metal U-zip, ≈600 mm track, twin sliders" },
   { label: "Handles", value: "Rolled leather, 250 mm, 100 mm clear drop" },
-  { label: "Strap", value: "Detachable, 20 mm, adjusts 850–1350 mm" },
-  { label: "Leather", value: "Full-grain, matte, 1.2–1.4 mm" },
+  { label: "Strap", value: "Detachable, 18 mm, adjusts 850–1350 mm" },
+  { label: "Leather", value: "Full-grain, matte, 1.2 mm" },
   { label: "Colorway", value: "Black or Bone" },
-  { label: "Hardware", value: "Brushed steel throughout" },
+  { label: "Hardware", value: "316L Brushed stainless steel" },
   { label: "Base", value: "Flat, reinforced, four steel feet" },
 ];
 
@@ -400,7 +400,7 @@ export default function FlagshipShowcase() {
 
   return (
     <>
-      {/* The product itself — plates and the numbers side by side */}
+      {/* The product itself, plates only — specs get their own panel next */}
       <section id="product" data-panel className={PANEL}>
         <div className="max-w-3xl">
           <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
@@ -411,51 +411,57 @@ export default function FlagshipShowcase() {
           </h2>
         </div>
 
-        <div className="mt-4 grid gap-6 md:mt-6 md:grid-cols-2 md:gap-14 lg:grid-cols-5">
-          <div className="lg:col-span-3">
-            <ProductGallery />
-          </div>
+        <div className="mx-auto mt-6 w-full max-w-3xl md:mt-10 lg:max-w-5xl xl:max-w-6xl">
+          <ProductGallery />
+        </div>
+      </section>
 
-          <div className="lg:col-span-2">
-            <h3 className="font-serif text-xl text-bone md:text-2xl">
-              Model 001 &mdash; The Folded Briefcase
-            </h3>
-            <p className="mt-2 text-[11px] md:text-xs font-light uppercase leading-relaxed tracking-[0.18em] text-silver">
-              One flat panel per face, folded into four facets. U-zip main
-              compartment. Padded 16&Prime; sleeve. Stands on its own.
-            </p>
+      {/* Model 001 specs — its own panel, following the plates */}
+      <section id="specs" data-panel className={PANEL}>
+        <div className="max-w-3xl">
+          <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
+            02 &mdash; The Standing Collection
+          </p>
+          <h2 className="mt-3 font-serif text-2xl leading-tight text-bone md:text-4xl">
+            Model 001 &mdash; The Folded Briefcase
+          </h2>
+          <p className="mt-4 text-[11px] md:text-xs font-light uppercase leading-relaxed tracking-[0.18em] text-silver">
+            One flat panel per face, folded into four facets. U-zip main
+            compartment. Padded 16&Prime; sleeve. Stands on its own.
+          </p>
+        </div>
 
-            <dl className="rule-t mt-3 divide-y divide-silver-dim/15">
-              {SPEC_ITEMS.map((item) => (
-                <div
-                  key={item.label}
-                  className="flex items-baseline justify-between gap-4 py-0.5"
-                >
-                  <dt className="shrink-0 text-[11px] uppercase tracking-vast text-silver-dim">
-                    {item.label}
-                  </dt>
-                  <dd className="text-right text-[13px] text-bone md:text-sm">
-                    {item.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-
-            <p className="mt-1 text-[11px] font-light uppercase leading-loose tracking-[0.14em] text-silver-dim">
-              All external, in millimetres. Tolerance &plusmn;2 mm.
-            </p>
-
-            <div className="mt-3 flex flex-col items-start gap-3">
-              <p className="font-serif text-2xl text-bone md:text-3xl">
-                6,500 &ndash; 7,000 EGP
-              </p>
-              <a
-                href="#order"
-                className="inline-block border border-bone/60 px-6 py-2.5 text-xs uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
+        <div className="mx-auto mt-8 w-full max-w-3xl">
+          <dl className="rule-t divide-y divide-silver-dim/15">
+            {SPEC_ITEMS.map((item) => (
+              <div
+                key={item.label}
+                className="flex items-baseline justify-between gap-4 py-2"
               >
-                Request to Order
-              </a>
-            </div>
+                <dt className="shrink-0 text-[11px] uppercase tracking-vast text-silver-dim">
+                  {item.label}
+                </dt>
+                <dd className="text-right text-sm text-bone md:text-base">
+                  {item.value}
+                </dd>
+              </div>
+            ))}
+          </dl>
+
+          <p className="mt-3 text-[11px] font-light uppercase leading-loose tracking-[0.14em] text-silver-dim">
+            All external, in millimetres. Tolerance &plusmn;2 mm.
+          </p>
+
+          <div className="mt-6 flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-8">
+            <p className="font-serif text-2xl text-bone md:text-3xl">
+              6,500 &ndash; 7,000 EGP
+            </p>
+            <a
+              href="#order"
+              className="inline-block border border-bone/60 px-6 py-2.5 text-xs uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
+            >
+              Request to Order
+            </a>
           </div>
         </div>
       </section>
@@ -464,13 +470,13 @@ export default function FlagshipShowcase() {
       <section id="gusset" data-panel className={PANEL}>
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
           <p>Fig. 03 &mdash; Right Gusset, Elevation</p>
-          <p className="hidden md:block">140 Deep</p>
+          <p className="hidden md:block">120 Deep</p>
         </div>
         <div className="mx-auto mt-6 w-full max-w-sm md:max-w-md">
           <GussetElevation />
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
-          The zip turns 90 mm down each gusset and stops in a leather garage
+          The zip turns 15 mm down each gusset and stops in a leather garage
           above the facet fold line &mdash; so the track never crosses a crease,
           and the bag opens from either end without fighting the fold.
         </p>
@@ -512,7 +518,7 @@ export default function FlagshipShowcase() {
           </div>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
-          20 mm leather, brushed steel swivel clips at both ends, centre slide
+          18 mm leather, brushed steel swivel clips at both ends, centre slide
           adjuster. It adjusts from 850 to 1350 mm &mdash; a 55 cm maximum
           drop, which is crossbody on a tall wearer. Unclip it and the bag is
           a briefcase again.

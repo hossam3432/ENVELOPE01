@@ -60,7 +60,7 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
 }
 
 /* View 5 — top down, zip fully open. Drawn at 1.2 px per mm, so the
-   420 × 140 mouth is 504 × 168 units.
+   420 × 120 mouth is 504 × 168 units.
 
    On a phone the sheet crops to the mouth and its two dimension lines —
    the five leader callouts ringing it exist to label surfaces the SURFACES
@@ -73,13 +73,13 @@ function InteriorPlanSheet({ narrow }) {
     <svg
       viewBox={narrow ? PLAN_BOX_NARROW : PLAN_BOX}
       role="img"
-      aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and no central divider."
+      aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and a full-height central divider splitting the main compartment in two."
       className="bp-sheet mx-auto block max-h-[38dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
       strokeWidth="1.2"
     >
-      {/* Mouth — 420 × 140 opened square */}
+      {/* Mouth — 420 × 120 opened square */}
       <path
         className="bp-draw"
         style={delay(0.1)}
@@ -132,10 +132,19 @@ function InteriorPlanSheet({ narrow }) {
         <rect x="612" y="162" width="12" height="12" rx="2" />
       </g>
 
+      {/* Central divider — full height, splits the main compartment in two */}
+      <path
+        className="bp-draw"
+        style={delay(1.35)}
+        pathLength="1"
+        strokeWidth="0.9"
+        d="M360 124 V224"
+      />
+
       <text
         className="bp-fade"
         style={delay(2.4)}
-        x="360"
+        x="460"
         y="178"
         textAnchor="middle"
         fill="currentColor"
@@ -144,7 +153,7 @@ function InteriorPlanSheet({ narrow }) {
         fontSize="11"
         letterSpacing="0.2em"
       >
-        NO CENTRAL DIVIDER
+        CENTRAL DIVIDER
       </text>
 
       {/* 420 across the mouth */}
@@ -164,7 +173,7 @@ function InteriorPlanSheet({ narrow }) {
         </text>
       </g>
 
-      {/* 140 depth */}
+      {/* 120 depth */}
       <g className="bp-fade" style={delay(1.85)} strokeWidth="0.8">
         <path d="M650 90 V258" />
         <path d="M644 90 H656" />
@@ -178,7 +187,7 @@ function InteriorPlanSheet({ narrow }) {
           stroke="none"
           style={DIM}
         >
-          140
+          120
         </text>
       </g>
 
@@ -240,6 +249,7 @@ const SURFACES = [
   { surface: "Organiser panel face", material: "Leather, same hide as the shell" },
   { surface: "Pocket mouths and slot edges", material: "Leather-trimmed, edge-finished" },
   { surface: "Laptop sleeve", material: "Woven, 6 mm foam, leather-trimmed mouth" },
+  { surface: "Central divider", material: "Full height, same lining as body" },
 ];
 
 const POCKETS = [
@@ -272,10 +282,12 @@ export default function InteriorPlan() {
             Medium compartmented. Hybrid materials.
           </h2>
           <p className="mt-4 max-w-xl text-base font-light leading-relaxed text-silver">
-            Not all-leather, not all-nylon. A full leather lining adds close to
-            200 g on a 1.2 kg bag, on surfaces you touch once a day and look at
-            rarely. All-nylon reads cheap the moment the bag is opened &mdash;
-            which is the moment you decide whether the price was justified.
+            Full-grain leather shell, with a two-material interior: woven
+            cotton canvas across the main compartment, and a synthetic
+            microfibre suede on the laptop sleeve and organiser panel.
+            Leather is specified where it carries load or takes wear. A full
+            leather lining would add close to 200 g to a 1.2 kg bag without
+            changing how it performs &mdash; weight better spent elsewhere.
           </p>
         </div>
 

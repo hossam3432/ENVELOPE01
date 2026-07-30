@@ -101,7 +101,7 @@ function ElevationSheet({ narrow, wide }) {
     <svg
       viewBox={narrow ? SHEET_BOX_NARROW : wide ? SHEET_BOX_WIDE : SHEET_BOX}
       role="img"
-      aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 140 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
+      aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 120 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
       className="bp-sheet mx-auto block max-h-[58dvh] w-full text-silver lg:max-h-[68dvh]"
       fill="none"
       stroke="currentColor"
@@ -348,12 +348,12 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={TITLE_CELL}
         >
-          <tspan x="404">420 × 310 × 140 MM</tspan>
+          <tspan x="404">420 × 310 × 120 MM</tspan>
           <tspan x="404" dy="15" opacity="0.7">
             ≈18 L, 1.15–1.30 KG
           </tspan>
           <tspan x="404" dy="15" opacity="0.7">
-            FULL-GRAIN 1.2–1.4
+            FULL-GRAIN 1.2
           </tspan>
         </text>
 
@@ -366,7 +366,7 @@ function ElevationSheet({ narrow, wide }) {
         >
           <tspan x="559">ZIP TRACK ≈600</tspan>
           <tspan x="559" dy="15" opacity="0.7">
-            90 PER GUSSET
+            15 PER GUSSET
           </tspan>
           <tspan x="559" dy="15" opacity="0.7">
             STITCH 7–9 SPI
@@ -379,11 +379,11 @@ function ElevationSheet({ narrow, wide }) {
 }
 
 const QUICK_SPECS = [
-  { label: "External", value: "420 × 310 × 140" },
+  { label: "External", value: "420 × 310 × 120" },
   { label: "Volume", value: "≈18 L" },
   { label: "Weight", value: "1.15–1.30 kg" },
   { label: "Fits", value: "16″ laptop" },
-  { label: "Leather", value: "Full-grain 1.2–1.4mm" },
+  { label: "Leather", value: "Full-grain 1.2mm" },
 ];
 
 /* HTML twin of the SVG's title block, shown only at lg+ once the drawing
@@ -467,8 +467,8 @@ export default function BlueprintHero() {
           <p className="mt-8 max-w-xl text-base font-light leading-relaxed text-silver">
             One flat panel, folded into four triangular facets that meet at a
             single point. A 16&Prime; laptop, a full day&rsquo;s carry, and a
-            shape that stands on its own. No external logos. No excess. Just
-            pure structural geometry.
+            shape that stands on its own. No excess. Just pure structural
+            geometry.
           </p>
           <a
             href="#product"
@@ -496,8 +496,7 @@ export default function BlueprintHero() {
             In a market of identical bags, we asked what happens when structure
             becomes the only signature. Each piece is cut, folded, and finished
             by hand in small Egyptian workshops, built for the private-sector
-            professional who values order and quiet authority. One model, made
-            and sold on an ongoing basis &mdash; not a limited run.
+            professional who values order and quiet authority.
           </p>
         </div>
       </section>
