@@ -52,8 +52,20 @@ export default function SEO() {
         property="og:locale:alternate"
         content={meta.openGraph.alternateLocale}
       />
+      {/* Helmet doesn't unwrap <> Fragment children (it walks props.children
+          against a fixed tag-name whitelist) — a Fragment grouping these
+          silently drops all of them, so each is its own top-level child. */}
       {meta.openGraph.image ? (
         <meta property="og:image" content={meta.openGraph.image} />
+      ) : null}
+      {meta.openGraph.image ? (
+        <meta property="og:image:width" content={String(meta.openGraph.imageWidth)} />
+      ) : null}
+      {meta.openGraph.image ? (
+        <meta property="og:image:height" content={String(meta.openGraph.imageHeight)} />
+      ) : null}
+      {meta.openGraph.image ? (
+        <meta property="og:image:alt" content={meta.openGraph.imageAlt} />
       ) : null}
 
       <meta name="twitter:card" content={meta.twitter.card} />
@@ -61,6 +73,9 @@ export default function SEO() {
       <meta name="twitter:description" content={meta.twitter.description} />
       {meta.twitter.image ? (
         <meta name="twitter:image" content={meta.twitter.image} />
+      ) : null}
+      {meta.twitter.image ? (
+        <meta name="twitter:image:alt" content={meta.twitter.imageAlt} />
       ) : null}
     </Helmet>
   );

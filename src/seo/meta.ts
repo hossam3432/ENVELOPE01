@@ -18,6 +18,9 @@ export interface OpenGraphMeta {
   title: string;
   description: string;
   image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  imageAlt?: string;
   url: string;
   type: "website" | "article" | "product";
   locale: string;
@@ -29,6 +32,7 @@ export interface TwitterMeta {
   title: string;
   description: string;
   image?: string;
+  imageAlt?: string;
 }
 
 export interface AlternateLinks {
@@ -49,11 +53,17 @@ export interface RouteMeta {
 
 const SITE_URL = "https://envelope01.com";
 
-// TODO: no 1200x630 og:image asset exists yet (docs/seo-audit.md, finding 2 —
-// twitter:card is currently invalid without one). Once a cropped product
-// plate is exported to public/og.jpg, set this to `${SITE_URL}/og.jpg` and
-// flip the twitter card below to "summary_large_image".
-const OG_IMAGE: string | undefined = undefined;
+// Generated at build time by scripts/generate-og-image.mjs (product plate
+// 01-front.jpg + the wordmark bar, screenshotted at exactly this size) —
+// see that script for how public/og.jpg is produced. Fixes docs/seo-audit.md
+// finding 2 (twitter:card was invalid without an image).
+const OG_IMAGE = `${SITE_URL}/og.jpg`;
+const OG_IMAGE_WIDTH = 1200;
+const OG_IMAGE_HEIGHT = 630;
+const OG_IMAGE_ALT: Record<string, string> = {
+  en: "ENVELOPE — Model No. 0.1, structured black leather work briefcase",
+  ar: "ENVELOPE — الموديل رقم ٠٫١، حقيبة عمل جلدية سوداء إنشائية",
+};
 
 // Order per CLAUDE.md voice rules: leather grade + thickness, laptop fit,
 // closure type, price. Values sourced from the published spec table
@@ -72,6 +82,21 @@ const HOME_TITLE: Record<string, string> = {
 const HOME_DESCRIPTION: Record<string, string> = {
   en: "Full-grain leather, 1.2 mm. Fits a 16-inch laptop upright. Folded-envelope front panel with magnetic closure. 6,500 EGP, cash on delivery only.",
   ar: "جلد كامل الحبة، ١٫٢ مم. يتسع للابتوب ١٦ بوصة بشكل رأسي. لوح أمامي مطوي على شكل مظروف بإغلاق مغناطيسي. ٦٬٥٠٠ جنيه مصري، الدفع عند الاستلام فقط.",
+};
+
+// Any locale-prefixed path that doesn't match src/routes.js — src/main.jsx
+// renders NotFoundPage for these, and this is that page's meta. Same body
+// copy source as src/i18n/content/*.js's `notFound` key; kept here too
+// since the meta title/description are a slightly different, SEO-specific
+// phrasing rather than the on-page H1/body.
+const NOT_FOUND_TITLE: Record<string, string> = {
+  en: "Page Not Found | ENVELOPE",
+  ar: "الصفحة غير موجودة | ENVELOPE",
+};
+
+const NOT_FOUND_DESCRIPTION: Record<string, string> = {
+  en: "This page doesn't exist. See Model No. 0.1, the structured leather work briefcase, on the ENVELOPE homepage.",
+  ar: "هذه الصفحة غير موجودة. شاهد الموديل رقم ٠٫١، حقيبة العمل الجلدية الإنشائية، على الصفحة الرئيسية لـ ENVELOPE.",
 };
 
 // Per-route title/description for the standalone content pages proposed in
@@ -102,6 +127,14 @@ function routePath(locale: string, slug: string) {
   return `${SITE_URL}/${locale}/${slug}/`;
 }
 
+// Self-referencing canonical for a path that matched no real route — still
+// "every route gets a canonical" even though this one is noindex; Google
+// treats a self-canonical on a 404 as harmless, and it's one fewer special
+// case in <SEO />.
+function unmatchedPath(locale: string, slug: string) {
+  return `${SITE_URL}/${locale}/${slug}/`;
+}
+
 export function getRouteMeta(pathname: string): RouteMeta {
   const locale = getLocaleFromPath(pathname);
   const alternateLocale = LOCALES.find((l) => l !== locale) ?? DEFAULT_LOCALE;
@@ -114,16 +147,31 @@ export function getRouteMeta(pathname: string): RouteMeta {
     ""
   );
   const route = slug ? getRouteBySlug(locale, slug) : null;
+  const notFound = Boolean(slug) && !route;
 
-  const title = route
+  const title = notFound
+    ? NOT_FOUND_TITLE[locale] ?? NOT_FOUND_TITLE[DEFAULT_LOCALE]
+    : route
     ? ROUTE_TITLE[route.key]?.[locale] ?? ROUTE_TITLE[route.key]?.[DEFAULT_LOCALE]
     : HOME_TITLE[locale] ?? HOME_TITLE[DEFAULT_LOCALE];
-  const description = route
+  const description = notFound
+    ? NOT_FOUND_DESCRIPTION[locale] ?? NOT_FOUND_DESCRIPTION[DEFAULT_LOCALE]
+    : route
     ? ROUTE_DESCRIPTION[route.key]?.[locale] ?? ROUTE_DESCRIPTION[route.key]?.[DEFAULT_LOCALE]
     : HOME_DESCRIPTION[locale] ?? HOME_DESCRIPTION[DEFAULT_LOCALE];
 
-  const canonical = route ? routePath(locale, route.slugs[locale]) : homePath(locale);
-  const alternates = route
+  const canonical = notFound
+    ? unmatchedPath(locale, slug)
+    : route
+    ? routePath(locale, route.slugs[locale])
+    : homePath(locale);
+
+  // A not-found path has no real translated counterpart — pointing its
+  // alternates at each locale's homepage is more useful (and more honest)
+  // than implying a matching broken page exists in the other language too.
+  const alternates = notFound
+    ? { en: homePath("en"), ar: homePath("ar"), xDefault: homePath(DEFAULT_LOCALE) }
+    : route
     ? {
         en: routePath("en", route.slugs.en),
         ar: routePath("ar", route.slugs.ar),
@@ -144,6 +192,9 @@ export function getRouteMeta(pathname: string): RouteMeta {
       title,
       description,
       image: OG_IMAGE,
+      imageWidth: OG_IMAGE_WIDTH,
+      imageHeight: OG_IMAGE_HEIGHT,
+      imageAlt: OG_IMAGE_ALT[locale] ?? OG_IMAGE_ALT[DEFAULT_LOCALE],
       url: canonical,
       type: "website",
       locale: LOCALE_OG[locale] ?? LOCALE_OG[DEFAULT_LOCALE],
@@ -154,10 +205,14 @@ export function getRouteMeta(pathname: string): RouteMeta {
       title,
       description,
       image: OG_IMAGE,
+      imageAlt: OG_IMAGE_ALT[locale] ?? OG_IMAGE_ALT[DEFAULT_LOCALE],
     },
-    // Stub content pages stay noindex until their `ready` flag flips in
-    // src/routes.js — publishing an empty TODO page to the index would be
-    // worse than not having the page at all.
-    robots: route && !route.ready ? "noindex, follow" : "index, follow",
+    // Not-found and stub content pages (ready:false in src/routes.js) both
+    // stay noindex — "follow" so crawlers can still reach real pages via
+    // the header/nav links every one of these shells renders (ArticleLayout
+    // for stubs, NotFoundPage's own chrome for a 404). Publishing an empty
+    // TODO page or a broken-link page to the index would be worse than not
+    // having the page at all.
+    robots: notFound || (route && !route.ready) ? "noindex, follow" : "index, follow",
   };
 }

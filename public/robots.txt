@@ -1,4 +1,10 @@
 User-agent: *
 Allow: /
 
+# Build-utility route only — screenshotted at build time to generate
+# public/og.jpg (see scripts/generate-og-image.mjs), never a real page and
+# never linked from anywhere on the site. Not a page a crawler should ever
+# reach, but disallowed explicitly rather than left to chance.
+Disallow: /__og-image__/
+
 Sitemap: https://envelope01.com/sitemap.xml

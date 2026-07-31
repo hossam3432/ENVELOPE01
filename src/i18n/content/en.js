@@ -390,6 +390,17 @@ const en = {
       metaTitle: "TODO",
       metaDescription: "TODO",
     },
+    // Rendered by src/pages/NotFoundPage.jsx for any locale-prefixed path
+    // that matches no slug in src/routes.js — see src/main.jsx. Meta
+    // title/description for this same page live in src/seo/meta.ts
+    // (NOT_FOUND_TITLE/NOT_FOUND_DESCRIPTION), not here — this is on-page
+    // copy, that's the SEO-specific phrasing.
+    notFound: {
+      eyebrow: "Error",
+      h1: "This Page Doesn't Exist",
+      body: "The link you followed doesn't match anything ENVELOPE publishes. Model No. 0.1 — the structured leather work briefcase — is on the homepage.",
+      cta: "View the Briefcase",
+    },
   },
 };
 

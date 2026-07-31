@@ -409,6 +409,13 @@ const ar = {
       metaTitle: "TODO",
       metaDescription: "TODO",
     },
+    // Mirrors the `notFound` key in en.js — see that file's comment.
+    notFound: {
+      eyebrow: "خطأ",
+      h1: "هذه الصفحة غير موجودة",
+      body: "الرابط الذي اتبعته لا يطابق أي صفحة تنشرها ENVELOPE. الموديل رقم ٠٫١ — حقيبة العمل الجلدية الإنشائية — موجود على الصفحة الرئيسية.",
+      cta: "عرض الحقيبة",
+    },
   },
 };
 
