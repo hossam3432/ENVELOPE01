@@ -2,32 +2,20 @@ import TraceBorder from "../ui/TraceBorder.jsx";
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
 import CalloutLegend from "../ui/CalloutLegend.jsx";
-
-// Same five facts the plan's leader lines point out, grouped by where they
-// sit on the sheet — the two top-edge labels above the figure on a phone,
-// the three lower ones below it.
-const CALLOUTS_ABOVE = [
-  { lines: ["PADDED LAPTOP SLEEVE", "370 × 265, 6 MM FOAM"] },
-  { lines: ["CHARCOAL WOVEN LINING"] },
-];
-const CALLOUTS_BELOW = [
-  { lines: ["KEY LEASH"] },
-  { lines: ["ORGANISER PANEL", "LEATHER-FACED"] },
-  { lines: ["ZIPPED VALUABLES", "200 × 150, FRONT WALL"] },
-];
+import { useLocale } from "../../i18n/LocaleContext.jsx";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
 const CALLOUT = {
   fontSize: 11,
   letterSpacing: "0.14em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Sans Arabic', sans-serif",
 };
 
 const DIM = {
   fontSize: 12,
   letterSpacing: "0.16em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Mono', monospace",
 };
 
 function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
@@ -69,11 +57,13 @@ const PLAN_BOX = "0 0 720 360";
 const PLAN_BOX_NARROW = "80 20 610 260";
 
 function InteriorPlanSheet({ narrow }) {
+  const { t } = useLocale();
+  const it = t.interior;
   return (
     <svg
       viewBox={narrow ? PLAN_BOX_NARROW : PLAN_BOX}
       role="img"
-      aria-label="Top-down plan of Model 001 with the U-zip fully open: padded laptop sleeve on the back wall, leather-faced organiser panel on the front wall, key leash on the left gusset, and a full-height central divider splitting the main compartment in two."
+      aria-label={it.ariaLabel}
       className="bp-sheet mx-auto block max-h-[38dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -153,7 +143,7 @@ function InteriorPlanSheet({ narrow }) {
         fontSize="11"
         letterSpacing="0.2em"
       >
-        CENTRAL DIVIDER
+        {it.centralDividerLabel}
       </text>
 
       {/* 420 across the mouth */}
@@ -169,7 +159,7 @@ function InteriorPlanSheet({ narrow }) {
           stroke="none"
           style={DIM}
         >
-          420
+          {it.widthNote}
         </text>
       </g>
 
@@ -187,7 +177,7 @@ function InteriorPlanSheet({ narrow }) {
           stroke="none"
           style={DIM}
         >
-          120
+          {it.depthNote}
         </text>
       </g>
 
@@ -199,7 +189,7 @@ function InteriorPlanSheet({ narrow }) {
             dot={[200, 110]}
             x={20}
             y={19}
-            lines={["PADDED LAPTOP SLEEVE", "370 × 265, 6 MM FOAM"]}
+            lines={it.calloutsAbove[0].lines}
           />
           <Callout
             at={2.1}
@@ -207,7 +197,7 @@ function InteriorPlanSheet({ narrow }) {
             dot={[200, 238]}
             x={20}
             y={285}
-            lines={["ORGANISER PANEL", "LEATHER-FACED"]}
+            lines={it.calloutsBelow[1].lines}
           />
           <Callout
             at={2.2}
@@ -215,7 +205,7 @@ function InteriorPlanSheet({ narrow }) {
             dot={[133, 168]}
             x={20}
             y={198}
-            lines={["KEY LEASH"]}
+            lines={it.calloutsBelow[0].lines}
           />
           <Callout
             at={2.25}
@@ -224,7 +214,7 @@ function InteriorPlanSheet({ narrow }) {
             x={700}
             y={301}
             anchor="end"
-            lines={["ZIPPED VALUABLES", "200 × 150, FRONT WALL"]}
+            lines={it.calloutsBelow[2].lines}
           />
           <Callout
             at={2.3}
@@ -233,7 +223,7 @@ function InteriorPlanSheet({ narrow }) {
             x={700}
             y={32}
             anchor="end"
-            lines={["CHARCOAL WOVEN LINING"]}
+            lines={it.calloutsAbove[1].lines}
           />
         </>
       )}
@@ -241,34 +231,10 @@ function InteriorPlanSheet({ narrow }) {
   );
 }
 
-const SURFACES = [
-  {
-    surface: "Body lining — walls and base",
-    material: "Dense woven, opaque, dark charcoal",
-  },
-  { surface: "Organiser panel face", material: "Leather, same hide as the shell" },
-  { surface: "Pocket mouths and slot edges", material: "Leather-trimmed, edge-finished" },
-  { surface: "Laptop sleeve", material: "Woven, 6 mm foam, leather-trimmed mouth" },
-  { surface: "Central divider", material: "Full height, same lining as body" },
-];
-
-const POCKETS = [
-  { name: "Padded laptop sleeve", where: "Back wall", spec: "370 × 265, retention strap with magnetic tab" },
-  { name: "Zipped valuables pocket", where: "Front wall, upper", spec: "200 × 150, leather-faced" },
-  { name: "Pen slots ×2", where: "Organiser", spec: "Leather" },
-  { name: "Card slot ×1", where: "Organiser", spec: "Leather" },
-  { name: "Open slip ×2", where: "Organiser", spec: "Woven, leather-trimmed mouth" },
-  { name: "Key leash", where: "Left gusset", spec: "Leather tab, brushed steel clip" },
-];
-
-const CLEAR_DIMS = [
-  { label: "Main compartment", value: "400 × 290 × 130" },
-  { label: "Laptop sleeve", value: "370 × 265" },
-  { label: "Front pocket", value: "400 × 110" },
-];
-
 export default function InteriorPlan() {
   const narrow = useIsNarrow();
+  const { t } = useLocale();
+  const it = t.interior;
 
   return (
     <>
@@ -276,27 +242,22 @@ export default function InteriorPlan() {
       <section id="interior" data-panel className={PANEL}>
         <div className="max-w-3xl">
           <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-            03 &mdash; The Interior
+            {it.eyebrow}
           </p>
           <h2 className="mt-3 font-serif text-3xl leading-tight text-bone md:text-5xl">
-            Medium compartmented. Hybrid materials.
+            {it.h2}
           </h2>
           <p className="mt-4 max-w-xl text-base font-light leading-relaxed text-silver">
-            Full-grain leather shell, with a two-material interior: woven
-            cotton canvas across the main compartment, and a synthetic
-            microfibre suede on the laptop sleeve and organiser panel.
-            Leather is specified where it carries load or takes wear. A full
-            leather lining would add close to 200 g to a 1.2 kg bag without
-            changing how it performs &mdash; weight better spent elsewhere.
+            {it.intro}
           </p>
         </div>
 
         <div className="mt-6 md:mt-8">
           <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-            <p>Fig. 05 &mdash; Top Down, Zip Fully Open</p>
-            <p className="hidden md:block">Plan &mdash; Millimetres</p>
+            <p>{it.figCaption}</p>
+            <p className="hidden md:block">{it.planLabel}</p>
           </div>
-          <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-4 w-full max-w-3xl" />
+          <CalloutLegend items={it.calloutsAbove} className="mx-auto mt-4 w-full max-w-3xl" />
 
           <div className="mt-4">
             <div className="mx-auto w-full max-w-3xl">
@@ -304,7 +265,7 @@ export default function InteriorPlan() {
             </div>
           </div>
 
-          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-4 w-full max-w-3xl" />
+          <CalloutLegend items={it.calloutsBelow} className="mx-auto mt-4 w-full max-w-3xl" />
         </div>
       </section>
 
@@ -313,10 +274,10 @@ export default function InteriorPlan() {
         <div className="grid gap-10 md:grid-cols-2 md:gap-16">
         <div>
           <p className="text-[11px] uppercase tracking-vast text-silver-dim">
-            Surfaces
+            {it.surfacesLabel}
           </p>
           <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
-            {SURFACES.map((row) => (
+            {it.surfaces.map((row) => (
               <div key={row.surface} className="py-3">
                 <dt className="text-sm text-bone md:text-base">{row.surface}</dt>
                 <dd className="mt-1 text-xs font-light uppercase leading-relaxed tracking-[0.16em] text-silver">
@@ -327,10 +288,10 @@ export default function InteriorPlan() {
           </dl>
 
           <p className="mt-8 text-[11px] uppercase tracking-vast text-silver-dim">
-            Interior clear dimensions
+            {it.clearDimsLabel}
           </p>
           <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
-            {CLEAR_DIMS.map((row) => (
+            {it.clearDims.map((row) => (
               <div
                 key={row.label}
                 className="flex items-baseline justify-between gap-4 py-3"
@@ -338,7 +299,7 @@ export default function InteriorPlan() {
                 <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
                   {row.label}
                 </dt>
-                <dd className="text-sm text-bone md:text-base">{row.value}</dd>
+                <dd className="font-mono text-sm text-bone md:text-base">{row.value}</dd>
               </div>
             ))}
           </dl>
@@ -346,10 +307,10 @@ export default function InteriorPlan() {
 
         <div>
           <p className="text-[11px] uppercase tracking-vast text-silver-dim">
-            Pockets
+            {it.pocketsLabel}
           </p>
           <dl className="rule-t mt-4 divide-y divide-silver-dim/15">
-            {POCKETS.map((row) => (
+            {it.pockets.map((row) => (
               <div key={row.name} className="py-3">
                 <dt className="flex items-baseline justify-between gap-4 text-sm text-bone md:text-base">
                   <span>{row.name}</span>
@@ -374,37 +335,18 @@ export default function InteriorPlan() {
         <div className="grid gap-8 md:grid-cols-12">
           <div className="md:col-span-4">
             <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-              Fig. 13 &mdash; Front Pocket
+              {it.frontPocketFig}
             </p>
             <h3 className="mt-3 font-serif text-3xl md:text-4xl">
-              The flap is not decoration.
+              {it.frontPocketH3}
             </h3>
           </div>
           <div className="md:col-span-7 md:col-start-6">
             <p className="text-base font-light leading-loose text-silver md:text-lg">
-              The upper facet of the front panel is a working flap. It folds
-              down on an 18 mm concealed magnetic snap onto a shallow
-              organiser: one tall slot, three card slots, one flat slip,
-              110 mm deep.
+              {it.frontPocketBody}
             </p>
             <dl className="rule-t mt-5 divide-y divide-silver-dim/15">
-              {[
-                {
-                  label: "Snap",
-                  value:
-                    "18 mm concealed, steel backing washer both sides, 30 mm bonded leather patch behind each half",
-                },
-                {
-                  label: "Hinge",
-                  value:
-                    "Skived to 0.7 mm across the fold, bonded reinforcement strip behind — full thickness cracks white within months",
-                },
-                {
-                  label: "Snap offset",
-                  value:
-                    "Minimum 40 mm from the card slots, so the magnet never sits against a stripe card or a keycard",
-                },
-              ].map((row) => (
+              {it.frontPocketRows.map((row) => (
                 <div key={row.label} className="py-2.5">
                   <dt className="text-[11px] uppercase tracking-vast text-silver-dim">
                     {row.label}
@@ -416,9 +358,7 @@ export default function InteriorPlan() {
               ))}
             </dl>
             <p className="mt-5 text-xs font-light uppercase leading-loose tracking-[0.16em] text-silver-dim">
-              Carry a card and a receipt here. Your phone belongs in the main
-              compartment &mdash; that one stays zipped, which is the point
-              that matters on a crowded commute.
+              {it.frontPocketFooter}
             </p>
           </div>
         </div>

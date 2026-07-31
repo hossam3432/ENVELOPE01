@@ -64,17 +64,16 @@ file in `public/`.
 
 - `public/_headers` — security headers (CSP, nosniff, frame-deny,
   referrer/permissions policy) on every route, plus one-year immutable caching
-  on `/assets/*` (filenames are content-hashed). The CSP allowlists
-  `fonts.googleapis.com` and `fonts.gstatic.com` because `index.html` loads
-  Bodoni Moda and Space Grotesk from Google Fonts — if fonts are ever
-  self-hosted, tighten those two directives back to `'self'`.
+  on `/assets/*` (filenames are content-hashed). Fonts (IBM Plex Sans Arabic,
+  IBM Plex Mono) are self-hosted via `@fontsource`, so `style-src`/`font-src`
+  are just `'self'` — no Google Fonts allowlist needed.
 - `public/robots.txt` — allows all crawlers, points at the sitemap.
-- `public/sitemap.xml` — the single page.
+- `public/sitemap.xml` — one `<url>` per locale (`/en/`, `/ar/`), each with an
+  `xhtml:link` cross-referencing its counterpart.
 - `public/favicon.svg` — monogram mark, referenced from `index.html`.
+- `public/_redirects` — `/ /en/ 302`, the only route on the site that isn't
+  `/en/…` or `/ar/…`.
 - `.node-version` — pins the Pages builder to Node 22 (Vite 7 needs ≥20.19).
-
-There is no `_redirects` file: the site is a single page with in-page anchors,
-so unknown paths should 404 rather than silently render the homepage.
 
 ## Verifying locally
 

@@ -2,45 +2,34 @@ import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
 import useIsWide from "../../hooks/useIsWide.js";
 import CalloutLegend from "../ui/CalloutLegend.jsx";
-
-// Same six facts the drawing's leader lines point out, grouped by where
-// they sit on the sheet — top-of-bag hardware above the figure on a phone,
-// lower-bag detail below it.
-const CALLOUTS_ABOVE = [
-  { lines: ["#8 U-ZIP · TWIN SLIDER"] },
-  { lines: ["D-RING ×2"] },
-  { lines: ["BRUSHED STEEL FITTING"] },
-];
-const CALLOUTS_BELOW = [
-  { lines: ["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"] },
-  { lines: ["STEEL FEET ×4"] },
-  { lines: ["FOUR FOLDED FACETS", "CREASE SKIVED 0.7"] },
-];
+import { useLocale } from "../../i18n/LocaleContext.jsx";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
+// Dimension figures (pure numbers) use the mono face; descriptive callout/
+// title-block text uses the sans face — both self-hosted, see index.css.
 const LABEL = {
   fontSize: 12,
   letterSpacing: "0.16em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Mono', monospace",
 };
 
 const CALLOUT = {
   fontSize: 11,
   letterSpacing: "0.14em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Sans Arabic', sans-serif",
 };
 
 const TITLE_CELL = {
   fontSize: 10,
   letterSpacing: "0.14em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Sans Arabic', sans-serif",
 };
 
 const SERIAL = {
   fontSize: 34,
   letterSpacing: "0.2em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Mono', monospace",
 };
 
 /* Sheet geometry. The elevation is drawn at 6/7 px per mm, so the 420 mm
@@ -96,12 +85,14 @@ const SHEET_BOX_NARROW = "130 78 480 444";
    used to occupy — the drawing itself fills a taller share of the
    viewBox as a result. The two bottom registration marks move with it. */
 function ElevationSheet({ narrow, wide }) {
+  const { t } = useLocale();
+  const h = t.hero;
   const sheetH = wide ? SHEET_H_WIDE : SHEET_H_FULL;
   return (
     <svg
       viewBox={narrow ? SHEET_BOX_NARROW : wide ? SHEET_BOX_WIDE : SHEET_BOX}
       role="img"
-      aria-label="Technical front elevation of Model 001, the folded briefcase: 420 by 310 by 120 millimetres, four triangular facets radiating from a centre point, U-shaped zip, one rolled top handle per face."
+      aria-label={h.sheetAriaLabel}
       className="bp-sheet mx-auto block max-h-[58dvh] w-full text-silver lg:max-h-[68dvh]"
       fill="none"
       stroke="currentColor"
@@ -217,7 +208,7 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={LABEL}
         >
-          420
+          {h.widthNote}
         </text>
       </g>
 
@@ -235,7 +226,7 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={LABEL}
         >
-          310
+          {h.heightNote}
         </text>
       </g>
 
@@ -247,7 +238,7 @@ function ElevationSheet({ narrow, wide }) {
             dot={[240, 176]}
             x={20}
             y={118}
-            lines={["#8 U-ZIP · TWIN SLIDER"]}
+            lines={h.calloutsAbove[0].lines}
           />
           <Callout
             at={3.3}
@@ -255,7 +246,7 @@ function ElevationSheet({ narrow, wide }) {
             dot={[174, 204]}
             x={20}
             y={162}
-            lines={["D-RING ×2"]}
+            lines={h.calloutsAbove[1].lines}
           />
           <Callout
             at={3.4}
@@ -263,7 +254,7 @@ function ElevationSheet({ narrow, wide }) {
             dot={[352, CY]}
             x={20}
             y={236}
-            lines={["MAGNETIC SNAP Ø18", "CONCEALED, FLAP TIP"]}
+            lines={h.calloutsBelow[0].lines}
           />
           <Callout
             at={3.6}
@@ -271,7 +262,7 @@ function ElevationSheet({ narrow, wide }) {
             dot={[200, 449]}
             x={20}
             y={458}
-            lines={["STEEL FEET ×4"]}
+            lines={h.calloutsBelow[1].lines}
           />
           <Callout
             at={3.45}
@@ -280,7 +271,7 @@ function ElevationSheet({ narrow, wide }) {
             x={700}
             y={104}
             anchor="end"
-            lines={["BRUSHED STEEL FITTING"]}
+            lines={h.calloutsAbove[2].lines}
           />
           <Callout
             at={3.55}
@@ -288,7 +279,7 @@ function ElevationSheet({ narrow, wide }) {
             dot={[270, 375]}
             x={20}
             y={385}
-            lines={["FOUR FOLDED FACETS", "CREASE SKIVED 0.7"]}
+            lines={h.calloutsBelow[2].lines}
           />
         </>
       )}
@@ -312,7 +303,7 @@ function ElevationSheet({ narrow, wide }) {
           style={TITLE_CELL}
           opacity="0.7"
         >
-          MODEL
+          {h.titleBlock.model}
         </text>
         <text
           x="95"
@@ -322,7 +313,7 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={SERIAL}
         >
-          001
+          {h.titleBlock.serial}
         </text>
 
         <text
@@ -332,12 +323,12 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={TITLE_CELL}
         >
-          <tspan x="166">FOLDED BRIEFCASE</tspan>
+          <tspan x="166">{h.titleBlock.type}</tspan>
           <tspan x="166" dy="15" opacity="0.7">
-            VIEW 1 — FRONT ELEVATION
+            {h.titleBlock.view}
           </tspan>
           <tspan x="166" dy="15" opacity="0.7">
-            DIMENSIONS IN MM · TOL ±2
+            {h.titleBlock.dims}
           </tspan>
         </text>
 
@@ -348,12 +339,12 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={TITLE_CELL}
         >
-          <tspan x="404">420 × 310 × 120 MM</tspan>
+          <tspan x="404">{h.titleBlock.col2Line1}</tspan>
           <tspan x="404" dy="15" opacity="0.7">
-            ≈18 L, 1.15–1.30 KG
+            {h.titleBlock.col2Line2}
           </tspan>
           <tspan x="404" dy="15" opacity="0.7">
-            FULL-GRAIN 1.2
+            {h.titleBlock.col2Line3}
           </tspan>
         </text>
 
@@ -364,12 +355,12 @@ function ElevationSheet({ narrow, wide }) {
           stroke="none"
           style={TITLE_CELL}
         >
-          <tspan x="559">ZIP TRACK ≈600</tspan>
+          <tspan x="559">{h.titleBlock.col3Line1}</tspan>
           <tspan x="559" dy="15" opacity="0.7">
-            15 PER GUSSET
+            {h.titleBlock.col3Line2}
           </tspan>
           <tspan x="559" dy="15" opacity="0.7">
-            STITCH 7–9 SPI
+            {h.titleBlock.col3Line3}
           </tspan>
         </text>
       </g>
@@ -378,29 +369,26 @@ function ElevationSheet({ narrow, wide }) {
   );
 }
 
-const QUICK_SPECS = [
-  { label: "External", value: "420 × 310 × 120" },
-  { label: "Volume", value: "≈18 L" },
-  { label: "Weight", value: "1.15–1.30 kg" },
-  { label: "Fits", value: "16″ laptop" },
-  { label: "Leather", value: "Full-grain 1.2mm" },
-];
-
 /* HTML twin of the SVG's title block, shown only at lg+ once the drawing
    stops carrying that text itself (see the `wide` crop in ElevationSheet). */
 function TitleBlockDetails({ className = "" }) {
+  const { t } = useLocale();
+  const d = t.hero.titleBlockDetails;
   return (
     <div className={className}>
       <p className="text-[11px] uppercase tracking-vast text-silver-dim">
-        Model
+        {d.model}
       </p>
-      <p className="mt-2 font-serif text-5xl text-bone" style={{ letterSpacing: "0.16em" }}>
-        001
+      <p
+        className="mt-2 font-serif text-5xl text-bone"
+        style={{ letterSpacing: "0.16em", fontFamily: "'IBM Plex Mono', monospace" }}
+      >
+        {d.serial}
       </p>
       <div className="mt-8 text-[11px] uppercase leading-relaxed tracking-[0.14em]">
-        <p className="text-silver">Folded Briefcase</p>
-        <p className="mt-1 text-silver-dim">View 1 — Front Elevation</p>
-        <p className="text-silver-dim">Dimensions in mm · Tol ±2</p>
+        <p className="text-silver">{d.type}</p>
+        <p className="mt-1 text-silver-dim">{d.view}</p>
+        <p className="text-silver-dim">{d.dims}</p>
       </div>
     </div>
   );
@@ -409,6 +397,8 @@ function TitleBlockDetails({ className = "" }) {
 export default function BlueprintHero() {
   const narrow = useIsNarrow();
   const wide = useIsWide();
+  const { t } = useLocale();
+  const h = t.hero;
 
   return (
     <>
@@ -419,13 +409,11 @@ export default function BlueprintHero() {
         className="rule-b relative flex min-h-[100dvh] flex-col justify-center px-6 pt-24 pb-12 md:px-12"
       >
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          <p>Fig. 01 &mdash; Model 001, Front Elevation</p>
-          <p className="hidden md:block">
-            Tolerance &plusmn;2 MM &mdash; Design Intent
-          </p>
+          <p>{h.figCaption}</p>
+          <p className="hidden md:block">{h.tolerance}</p>
         </div>
 
-        <CalloutLegend items={CALLOUTS_ABOVE} className="mx-auto mt-8 w-full max-w-3xl" />
+        <CalloutLegend items={h.calloutsAbove} className="mx-auto mt-8 w-full max-w-3xl" />
 
         <div className="mt-6 md:mt-4 lg:mt-8 lg:grid lg:grid-cols-[auto_minmax(0,1fr)_auto] lg:items-center">
           <TitleBlockDetails className="hidden lg:block lg:w-48 lg:mx-2 xl:mx-3" />
@@ -434,10 +422,10 @@ export default function BlueprintHero() {
             <ElevationSheet narrow={narrow} wide={wide} />
           </div>
 
-          <CalloutLegend items={CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
+          <CalloutLegend items={h.calloutsBelow} className="mx-auto mt-6 w-full max-w-3xl" />
 
-          <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-5 lg:mx-0 lg:ml-2 xl:ml-3 lg:mt-0 lg:block lg:w-48 lg:max-w-none lg:space-y-6 lg:border-t-0 lg:pt-0">
-            {QUICK_SPECS.map((spec) => (
+          <dl className="mx-auto mt-6 grid w-full max-w-3xl grid-cols-2 gap-x-8 gap-y-5 border-t border-silver-dim/20 pt-6 md:grid-cols-5 lg:mx-0 lg:ms-2 xl:ms-3 lg:mt-0 lg:block lg:w-48 lg:max-w-none lg:space-y-6 lg:border-t-0 lg:pt-0">
+            {h.quickSpecs.map((spec) => (
               <div
                 key={spec.label}
                 className="lg:border-t lg:border-silver-dim/20 lg:pt-5 lg:first:border-t-0 lg:first:pt-0"
@@ -462,19 +450,16 @@ export default function BlueprintHero() {
       >
         <div className="max-w-4xl">
           <h1 className="font-serif text-4xl leading-[1.15] text-bone md:text-6xl">
-            Structured elegance for the modern workday.
+            {h.statementH1}
           </h1>
           <p className="mt-8 max-w-xl text-base font-light leading-relaxed text-silver">
-            One flat panel, folded into four triangular facets that meet at a
-            single point. A 16&Prime; laptop, a full day&rsquo;s carry, and a
-            shape that stands on its own. No excess. Just pure structural
-            geometry.
+            {h.statementBody}
           </p>
           <a
             href="#product"
             className="mt-10 inline-block border border-bone/60 px-8 py-4 text-xs md:text-[13px] uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
           >
-            View the Briefcase
+            {h.statementCta}
           </a>
         </div>
       </section>
@@ -487,16 +472,13 @@ export default function BlueprintHero() {
       >
         <div className="max-w-4xl">
           <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-            Manifesto
+            {h.manifestoEyebrow}
           </p>
           <h2 className="mt-6 font-serif text-3xl leading-tight text-bone md:text-5xl">
-            We do not decorate. We construct.
+            {h.manifestoH2}
           </h2>
           <p className="mt-8 max-w-2xl text-base font-light leading-loose text-silver">
-            In a market of identical bags, we asked what happens when structure
-            becomes the only signature. Each piece is cut, folded, and finished
-            by hand in small Egyptian workshops, built for the private-sector
-            professional who values order and quiet authority.
+            {h.manifestoBody}
           </p>
         </div>
       </section>

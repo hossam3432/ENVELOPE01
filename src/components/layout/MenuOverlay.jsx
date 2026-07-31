@@ -1,14 +1,10 @@
 import { useEffect } from "react";
-
-const LINKS = [
-  { index: "01", label: "The Manifesto", href: "#manifesto" },
-  { index: "02", label: "Model 001", href: "#product" },
-  { index: "03", label: "The Interior", href: "#interior" },
-  { index: "04", label: "Material Truth", href: "#anatomy" },
-  { index: "05", label: "Order", href: "#order" },
-];
+import { useLocale } from "../../i18n/LocaleContext.jsx";
 
 export default function MenuOverlay({ open, onClose }) {
+  const { t } = useLocale();
+  const LINKS = t.menu.links;
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => e.key === "Escape" && onClose();
@@ -51,8 +47,8 @@ export default function MenuOverlay({ open, onClose }) {
       </nav>
 
       <div className="flex items-end justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-        <p>Structural leather objects</p>
-        <p>Est. Cairo</p>
+        <p>{t.menu.tagline}</p>
+        <p>{t.menu.est}</p>
       </div>
     </div>
   );

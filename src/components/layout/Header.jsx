@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+import { useLocale } from "../../i18n/LocaleContext.jsx";
 
 export default function Header({ menuOpen, onToggleMenu }) {
   const [scrolled, setScrolled] = useState(false);
+  const { t } = useLocale();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -28,11 +30,11 @@ export default function Header({ menuOpen, onToggleMenu }) {
           href="#top"
           className="font-sans text-2xl font-medium tracking-[0.3em] uppercase"
         >
-          Envelope 01
+          {t.header.wordmark}
         </a>
 
         <p className="hidden text-[11px] md:text-xs uppercase tracking-vast text-silver md:block">
-          Engineered Form &mdash; Cairo, EG
+          {t.header.tagline}
         </p>
 
         <button
@@ -42,7 +44,7 @@ export default function Header({ menuOpen, onToggleMenu }) {
           aria-controls="menu-overlay"
           className="cursor-pointer text-xs md:text-[13px] uppercase tracking-vast transition-colors duration-300 hover:text-silver"
         >
-          {menuOpen ? "Close" : "Menu"}
+          {menuOpen ? t.header.menuClose : t.header.menuOpen}
         </button>
       </div>
     </header>

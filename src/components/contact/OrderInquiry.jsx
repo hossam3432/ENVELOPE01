@@ -1,17 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 import TraceBorder from "../ui/TraceBorder.jsx";
 import { PANEL } from "../ui/panel.js";
+import { useLocale } from "../../i18n/LocaleContext.jsx";
+import { toArabicIndicDigits } from "../../i18n/digits.js";
 
 // Form fade-out duration. Must match the duration utility on the <form>.
 const FORM_EXIT_MS = 450;
 
-// The two colourways. `swatch` is the literal leather colour shown in the
-// chip; `theme` is the value written to data-colorway on <html>, which
-// repaints the site (see the colorway block in index.css).
-const COLORWAYS = [
-  { name: "Black", swatch: "#000000", theme: "black" },
-  { name: "Bone", swatch: "#f4f1ea", theme: "bone" },
-];
+// Literal leather swatch colours shown in the chip, keyed by theme (the
+// value written to data-colorway on <html>, matching the colorway block in
+// index.css). Localized names come from t.order.colorways.
+const SWATCHES = {
+  black: "#000000",
+  bone: "#f4f1ea",
+};
 
 const FIELD_BASE =
   "w-full border-b border-silver-dim/40 bg-transparent pt-3 pb-2 font-serif text-lg text-bone outline-none transition-colors duration-300 placeholder:text-silver/80 focus:border-bone md:text-xl";
@@ -33,9 +35,16 @@ function Field({ index, label, children }) {
 }
 
 export default function OrderInquiry() {
+  const { t, locale } = useLocale();
+  const o = t.order;
+  const fieldIndex = (n) => {
+    const padded = String(n).padStart(2, "0");
+    return locale === "ar" ? toArabicIndicDigits(padded) : padded;
+  };
+
   // idle -> exiting (form fading out) -> sent (confirmation shown)
   const [status, setStatus] = useState("idle");
-  const [colorway, setColorway] = useState(COLORWAYS[0]);
+  const [colorway, setColorway] = useState(o.colorways[0]);
   const exitTimer = useRef(null);
 
   useEffect(() => () => clearTimeout(exitTimer.current), []);
@@ -67,15 +76,13 @@ export default function OrderInquiry() {
     <section id="order" data-panel className={PANEL}>
       <div className="max-w-3xl">
         <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          05 &mdash; Order
+          {o.eyebrow}
         </p>
         <h2 className="mt-2 font-serif text-4xl leading-tight text-bone md:text-5xl">
-          Request to Order.
+          {o.h2}
         </h2>
         <p className="mt-3 max-w-xl text-base font-light leading-relaxed text-silver">
-          Leave your details and preferred color. No deposit, no serial
-          number &mdash; we confirm everything over WhatsApp before you pay
-          on delivery.
+          {o.intro}
         </p>
       </div>
 
@@ -83,14 +90,13 @@ export default function OrderInquiry() {
         {status === "sent" ? (
           <div role="status" aria-live="polite" className="fade-rise py-6">
             <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-              Request Received
+              {o.sentEyebrow}
             </p>
             <p className="mt-6 font-serif text-3xl leading-tight text-bone md:text-4xl">
-              Thanks &mdash; we&rsquo;ll message you on WhatsApp shortly.
+              {o.sentH}
             </p>
             <p className="mt-6 max-w-md text-base font-light leading-relaxed text-silver">
-              We&rsquo;ll confirm color, price, and delivery timing before
-              anything is charged.
+              {o.sentBody}
             </p>
           </div>
         ) : (
@@ -100,18 +106,18 @@ export default function OrderInquiry() {
               status === "exiting" ? "pointer-events-none opacity-0" : ""
             }`}
           >
-            <Field index="01" label="Full Name">
+            <Field index={fieldIndex(1)} label={o.fullNameLabel}>
               <input
                 type="text"
                 name="fullName"
                 required
                 autoComplete="name"
-                placeholder="Your name"
+                placeholder={o.fullNamePlaceholder}
                 className={FIELD_BASE}
               />
             </Field>
 
-            <Field index="02" label="WhatsApp Number">
+            <Field index={fieldIndex(2)} label={o.whatsappLabel}>
               <input
                 type="tel"
                 name="whatsapp"
@@ -119,21 +125,21 @@ export default function OrderInquiry() {
                 autoComplete="tel"
                 inputMode="tel"
                 pattern="^[+0-9][0-9 ()-]{7,}$"
-                placeholder="+20 —"
+                placeholder={o.whatsappPlaceholder}
                 className={FIELD_BASE}
               />
             </Field>
 
             <div className="rule-t grid gap-2 py-2.5 md:grid-cols-12 md:gap-6 md:py-3">
-              <span className="text-[11px] md:text-xs tracking-vast text-silver-dim md:col-span-1">
-                03
+              <span className="font-mono text-[11px] md:text-xs tracking-vast text-silver-dim md:col-span-1">
+                {fieldIndex(3)}
               </span>
               <div className="md:col-span-11">
                 <span className="block text-xs uppercase leading-relaxed tracking-[0.18em] text-silver md:text-[13px]">
-                  Preferred Color
+                  {o.colorLabel}
                 </span>
                 <div className="mt-3 flex gap-4">
-                  {COLORWAYS.map((option) => (
+                  {o.colorways.map((option) => (
                     <label
                       key={option.name}
                       className="flex cursor-pointer items-center gap-3 border border-silver-dim/40 px-5 py-2.5 text-sm text-bone transition-colors duration-300 has-[:checked]:border-bone has-[:checked]:bg-bone/10 has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-bone"
@@ -149,14 +155,14 @@ export default function OrderInquiry() {
                       <span
                         aria-hidden="true"
                         className="h-4 w-4 rounded-full border border-silver-dim/60"
-                        style={{ backgroundColor: option.swatch }}
+                        style={{ backgroundColor: SWATCHES[option.theme] }}
                       />
                       {option.name}
                     </label>
                   ))}
                 </div>
                 <p className="mt-3 text-[11px] uppercase leading-relaxed tracking-[0.16em] text-silver-dim">
-                  The page takes on the colour you choose.
+                  {o.colorNote}
                 </p>
               </div>
             </div>
@@ -167,10 +173,10 @@ export default function OrderInquiry() {
                 className="trace-box trace-box-loop w-full cursor-pointer bg-carbon px-8 py-3 text-xs md:text-[13px] uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-white/5 md:w-auto"
               >
                 <TraceBorder />
-                Send Request
+                {o.submit}
               </button>
               <p className="mt-3 max-w-md text-xs md:text-[13px] font-light leading-loose text-silver-dim">
-                Payment on delivery via Aramex. Nothing is charged now.
+                {o.paymentNote}
               </p>
             </div>
           </form>

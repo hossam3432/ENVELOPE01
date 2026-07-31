@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+/* Self-hosted, subsetted per script (arabic/latin/etc. each their own woff2,
+   loaded lazily by unicode-range) — see src/i18n/fonts.js for the specific
+   files preloaded per locale. Replaces the Google Fonts <link> that used to
+   live in index.html. */
+@import "@fontsource/ibm-plex-sans-arabic/300.css";
+@import "@fontsource/ibm-plex-sans-arabic/400.css";
+@import "@fontsource/ibm-plex-sans-arabic/500.css";
+@import "@fontsource/ibm-plex-mono/400.css";
+
 @theme {
   /* ENVELOPE 01 — strict palette: black ground + bone, brushed-steel accent */
   --color-carbon: #000000;
@@ -9,12 +18,12 @@
   --color-silver: #a8a6a0;
   --color-silver-dim: #7d7b74;
 
-  /* Typography — elegant serif for editorial headlines, clean sans for the
-     wordmark and utility text (labels, nav, dimension callouts). */
-  /* TEST: headlines temporarily share the wordmark's face. To revert, restore
-     --font-serif to "Bodoni Moda", "Didot", serif. */
-  --font-serif: "Space Grotesk", "Helvetica Neue", sans-serif;
-  --font-sans: "Space Grotesk", "Helvetica Neue", sans-serif;
+  /* Typography — one face for both scripts (headlines and wordmark share it,
+     same as body text), plus a mono face reserved for specification figures
+     (dimension tables, price, SVG dimension callouts). */
+  --font-serif: "IBM Plex Sans Arabic", "Helvetica Neue", sans-serif;
+  --font-sans: "IBM Plex Sans Arabic", "Helvetica Neue", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --tracking-vast: 0.35em;
 }
@@ -210,6 +219,14 @@ body {
     transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
     background-color 0.5s ease;
   pointer-events: none;
+}
+
+/* transform-origin has no logical keyword in CSS, so RTL needs an explicit
+   override — otherwise the rule would still draw left-to-right under
+   Arabic's right-to-left reading direction. */
+:dir(rtl) .rule-t::after,
+:dir(rtl) .rule-b::after {
+  transform-origin: right;
 }
 
 .rule-t::after {

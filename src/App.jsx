@@ -1,5 +1,6 @@
 import { useState } from "react";
 import SEO from "./seo/SEO.jsx";
+import { useLocale } from "./i18n/LocaleContext.jsx";
 import Header from "./components/layout/Header.jsx";
 import MenuOverlay from "./components/layout/MenuOverlay.jsx";
 import BlueprintHero from "./components/hero/BlueprintHero.jsx";
@@ -15,6 +16,7 @@ import useMouseSpotlight from "./hooks/useMouseSpotlight.js";
 
 export default function App() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useLocale();
 
   useDrawReveal();
   useSectionScroll();
@@ -49,9 +51,9 @@ export default function App() {
           }
           className="cursor-pointer transition-colors duration-300 hover:text-bone"
         >
-          Cookie Settings
+          {t.footer.cookieSettings}
         </button>
-        <p>Engineered in Egypt</p>
+        <p>{t.footer.tagline}</p>
       </footer>
 
       <CookieConsent />

@@ -1,97 +1,51 @@
 import { useState } from "react";
 
 import TraceBorder from "../ui/TraceBorder.jsx";
+import { useLocale } from "../../i18n/LocaleContext.jsx";
+import { toArabicIndicDigits } from "../../i18n/digits.js";
 
-import front from "../../assets/product/01-front.jpg";
-import gusset from "../../assets/product/02-gusset.jpg";
-import top from "../../assets/product/03-top.jpg";
-import interior from "../../assets/product/04-interior.jpg";
-import base from "../../assets/product/05-base.jpg";
-import handle from "../../assets/product/06-handle.jpg";
-import facet from "../../assets/product/07-facet.jpg";
-import interiorPacked from "../../assets/product/08-interior-packed.jpg";
-import strap from "../../assets/product/09-strap.jpg";
+// `?w=...&format=avif;webp;jpg&as=picture` (vite-imagetools) generates real
+// AVIF + WebP variants at each listed width plus a JPEG fallback at build
+// time, and resolves to { sources: { avif, webp, jpeg }, img: { src, w, h } }
+// — note the "jpeg" key even though the directive says "jpg" (imagetools
+// normalizes the format name). srcset strings are ready to spread into
+// <picture>/<source>/<img> below. Widths are capped near each file's native
+// resolution (see the -06/-07 pair, shot at 1200 not 1400) so nothing gets
+// upscaled.
+import front from "../../assets/product/01-front.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import gusset from "../../assets/product/02-gusset.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import top from "../../assets/product/03-top.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import interior from "../../assets/product/04-interior.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import base from "../../assets/product/05-base.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import handle from "../../assets/product/06-handle.jpg?w=480;900;1200&format=avif;webp;jpg&as=picture";
+import facet from "../../assets/product/07-facet.jpg?w=480;900;1200&format=avif;webp;jpg&as=picture";
+import interiorPacked from "../../assets/product/08-interior-packed.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
+import strap from "../../assets/product/09-strap.jpg?w=480;900;1400&format=avif;webp;jpg&as=picture";
 
-import frontThumb from "../../assets/product/thumb/01-front.jpg";
-import gussetThumb from "../../assets/product/thumb/02-gusset.jpg";
-import topThumb from "../../assets/product/thumb/03-top.jpg";
-import interiorThumb from "../../assets/product/thumb/04-interior.jpg";
-import baseThumb from "../../assets/product/thumb/05-base.jpg";
-import handleThumb from "../../assets/product/thumb/06-handle.jpg";
-import facetThumb from "../../assets/product/thumb/07-facet.jpg";
-import interiorPackedThumb from "../../assets/product/thumb/08-interior-packed.jpg";
-import strapThumb from "../../assets/product/thumb/09-strap.jpg";
+import frontThumb from "../../assets/product/thumb/01-front.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import gussetThumb from "../../assets/product/thumb/02-gusset.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import topThumb from "../../assets/product/thumb/03-top.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import interiorThumb from "../../assets/product/thumb/04-interior.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import baseThumb from "../../assets/product/thumb/05-base.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import handleThumb from "../../assets/product/thumb/06-handle.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import facetThumb from "../../assets/product/thumb/07-facet.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import interiorPackedThumb from "../../assets/product/thumb/08-interior-packed.jpg?w=110;220&format=avif;webp;jpg&as=picture";
+import strapThumb from "../../assets/product/thumb/09-strap.jpg?w=110;220&format=avif;webp;jpg&as=picture";
 
 /* Plates run alongside the Fig. drawings — photographs, not elevations.
-   Each note repeats a dimension the site already publishes elsewhere. */
-const PLATES = [
-  {
-    src: front,
-    thumb: frontThumb,
-    title: "Front Elevation",
-    note: "420 × 310. One flat panel per face, folded into four facets.",
-    alt: "The Model 001 briefcase photographed square on: a black full-grain leather front panel creased into four facets around a central envelope flap, twin rolled handles, twin zip sliders at the top edge.",
-  },
-  {
-    src: gusset,
-    thumb: gussetThumb,
-    title: "Right Gusset",
-    note: "120 deep. The zip runs 15 down, D-ring above the fold line.",
-    alt: "The briefcase seen from the right side: a 120 millimetre gusset, the metal zip turning down from the top edge, a brushed steel D-ring on a leather tab.",
-    fit: "contain",
-  },
-  {
-    src: top,
-    thumb: topThumb,
-    title: "Top, Closed",
-    note: "≈600 mm U-zip track, twin sliders. 100 mm clear handle drop.",
-    alt: "The briefcase from directly above, closed: the metal zip track running the length of the top edge with two sliders parked centre, the rolled handles held by brushed steel keepers.",
-  },
-  {
-    src: interior,
-    thumb: interiorThumb,
-    title: "Interior, Zip Open",
-    note: "Padded 16″ sleeve, 370 × 265. Cotton canvas lining throughout.",
-    alt: "The briefcase from above with the zip fully open, showing the cotton canvas lining, the padded laptop sleeve across the back wall and a slim card pocket on the right.",
-    fit: "contain",
-  },
-  {
-    src: interiorPacked,
-    thumb: interiorPackedThumb,
-    title: "Interior, Packed",
-    note: "A 16″ laptop, charging gear, and daily carry — all seated, nothing loose.",
-    alt: "The briefcase open and packed on a desk: a laptop in the padded sleeve, cables and a power bank in the mesh pockets, earbuds, a notebook, pen, keys, phone, and a water bottle in the main compartment.",
-    fit: "contain",
-  },
-  {
-    src: base,
-    thumb: baseThumb,
-    title: "Base",
-    note: "Flat, reinforced base on four steel feet. Stands unaided, empty.",
-    alt: "The underside of the briefcase: a flat reinforced base panel with a brushed steel foot set into each of the four corners.",
-  },
-  {
-    src: handle,
-    thumb: handleThumb,
-    title: "Handle Anchor",
-    note: "Rolled leather through brushed steel. 7–9 stitches per inch.",
-    alt: "Close detail of a rolled leather handle passing through a brushed steel keeper, stitched down to the body panel.",
-  },
-  {
-    src: facet,
-    thumb: facetThumb,
-    title: "Facet Corner",
-    note: "Creases skived to 0.7 mm at the fold, so they never crack white.",
-    alt: "Close detail of a folded corner where three facets meet, with the zip terminating in a leather garage just below.",
-  },
-  {
-    src: strap,
-    thumb: strapThumb,
-    title: "Strap, Detached",
-    note: "18 mm leather, brushed steel swivel clips. Adjusts 850–1350 mm.",
-    alt: "The detachable shoulder strap laid flat: leather with a centre slide adjuster and a brushed steel swivel clip at each end.",
-    fit: "contain",
-  },
+   Each note repeats a dimension the site already publishes elsewhere.
+   Image assets are locale-independent; title/note/alt text comes from
+   t.gallery.plates (same order) in the component below. */
+const PLATE_IMAGES = [
+  { picture: front, thumb: frontThumb },
+  { picture: gusset, thumb: gussetThumb, fit: "contain" },
+  { picture: top, thumb: topThumb },
+  { picture: interior, thumb: interiorThumb, fit: "contain" },
+  { picture: interiorPacked, thumb: interiorPackedThumb, fit: "contain" },
+  { picture: base, thumb: baseThumb },
+  { picture: handle, thumb: handleThumb },
+  { picture: facet, thumb: facetThumb },
+  { picture: strap, thumb: strapThumb, fit: "contain" },
 ];
 
 /* One frame. The <img> is deliberately not keyed — the element persists
@@ -114,16 +68,23 @@ function Plate({ plate, number, className = "" }) {
         {/* Sized off the viewport height, not a fixed width, so the plate
             never pushes this section past one screen on a short display. */}
         <div className="aspect-square h-[26dvh] max-h-[360px] min-h-[160px] w-auto max-w-full overflow-hidden bg-carbon-soft lg:h-[46dvh] lg:max-h-[600px]">
-          <img
-            src={plate.src}
-            alt={plate.alt}
-            width="1400"
-            height="1875"
-            decoding="async"
-            className={`h-full w-full object-center ${
-              plate.fit === "contain" ? "object-contain" : "object-cover"
-            }`}
-          />
+          <picture>
+            <source srcSet={plate.picture.sources.avif} type="image/avif" />
+            <source srcSet={plate.picture.sources.webp} type="image/webp" />
+            <img
+              src={plate.picture.img.src}
+              srcSet={plate.picture.sources.jpeg}
+              sizes="(min-width: 1024px) 46vh, 26vh"
+              alt={plate.alt}
+              width={plate.picture.img.w}
+              height={plate.picture.img.h}
+              loading="lazy"
+              decoding="async"
+              className={`h-full w-full object-center ${
+                plate.fit === "contain" ? "object-contain" : "object-cover"
+              }`}
+            />
+          </picture>
         </div>
         <TraceBorder
           key={number}
@@ -132,18 +93,31 @@ function Plate({ plate, number, className = "" }) {
         />
       </div>
       <figcaption className="mt-2 text-center text-[11px] uppercase tracking-vast text-silver-dim">
-        Pl. {String(number).padStart(2, "0")} &mdash; {plate.title}
+        {plate.plateWord} {plate.numberLabel} &mdash; {plate.title}
       </figcaption>
     </figure>
   );
 }
 
+function formatIndex(n, locale) {
+  const padded = String(n).padStart(2, "0");
+  return locale === "ar" ? toArabicIndicDigits(padded) : padded;
+}
+
 export default function ProductGallery() {
   const [index, setIndex] = useState(0);
-  const plate = PLATES[index];
+  const { t, locale } = useLocale();
+  const g = t.gallery;
+  const plates = PLATE_IMAGES.map((image, i) => ({
+    ...image,
+    ...g.plates[i],
+    plateWord: g.plateWord,
+    numberLabel: formatIndex(i + 1, locale),
+  }));
+  const plate = plates[index];
 
   const step = (delta) =>
-    setIndex((i) => (i + delta + PLATES.length) % PLATES.length);
+    setIndex((i) => (i + delta + plates.length) % plates.length);
 
   const onKeyDown = (event) => {
     if (event.key === "ArrowRight") {
@@ -158,16 +132,16 @@ export default function ProductGallery() {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-4 text-[11px] uppercase tracking-vast text-silver-dim">
-        <p>Plates</p>
-        <p className="shrink-0">
-          {String(index + 1).padStart(2, "0")} / {String(PLATES.length).padStart(2, "0")}
+        <p>{g.plateLabel}</p>
+        <p className="shrink-0 font-mono">
+          {formatIndex(index + 1, locale)} / {formatIndex(plates.length, locale)}
         </p>
       </div>
 
       {/* One large plate, centered above the thumbnail strip. */}
       <div
         role="group"
-        aria-label="Model 001 photographs — use the left and right arrow keys to change plate"
+        aria-label={g.groupAriaLabel}
         tabIndex={0}
         onKeyDown={onKeyDown}
         className="mx-auto mt-3 w-full outline-none focus-visible:[&_.aspect-square]:border-bone/60"
@@ -176,12 +150,13 @@ export default function ProductGallery() {
       </div>
 
       <div className="mt-3 grid grid-cols-9 gap-2">
-        {PLATES.map((item, i) => (
+        {plates.map((item, i) => (
           <button
-            key={item.src}
+            key={item.picture.img.src}
             type="button"
+            data-plate-thumb
             onClick={() => setIndex(i)}
-            aria-label={`Plate ${i + 1} — ${item.title}`}
+            aria-label={`${item.plateWord} ${item.numberLabel} — ${item.title}`}
             aria-current={i === index ? "true" : undefined}
             className={`aspect-square overflow-hidden border bg-carbon-soft p-1 transition-opacity duration-300 ${
               i === index
@@ -190,15 +165,21 @@ export default function ProductGallery() {
             }`}
           >
             {/* contain, not cover — the whole plate is visible in the strip */}
-            <img
-              src={item.thumb}
-              alt=""
-              width="220"
-              height="295"
-              loading="lazy"
-              decoding="async"
-              className="h-full w-full object-contain object-center"
-            />
+            <picture>
+              <source srcSet={item.thumb.sources.avif} type="image/avif" />
+              <source srcSet={item.thumb.sources.webp} type="image/webp" />
+              <img
+                src={item.thumb.img.src}
+                srcSet={item.thumb.sources.jpeg}
+                sizes="(min-width: 1280px) 128px, (min-width: 1024px) 113px, (min-width: 768px) 85px, 11vw"
+                alt=""
+                width={item.thumb.img.w}
+                height={item.thumb.img.h}
+                loading="lazy"
+                decoding="async"
+                className="h-full w-full object-contain object-center"
+              />
+            </picture>
           </button>
         ))}
       </div>
@@ -207,7 +188,7 @@ export default function ProductGallery() {
         <p className="max-w-[30ch] leading-relaxed normal-case tracking-[0.12em] text-silver">
           {plate.note}
         </p>
-        <p className="shrink-0">Cairo, EG</p>
+        <p className="shrink-0">{g.locationTag}</p>
       </div>
     </div>
   );

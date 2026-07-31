@@ -4,23 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--
-      title/description/canonical/robots/og:*/twitter:* are intentionally
-      omitted here — src/seo/SEO.jsx (backed by src/seo/meta.ts) renders them
-      per-route via react-helmet-async, which on React 19 hoists real
-      <title>/<meta>/<link> elements into <head> natively. A static <title>
-      here would be a second, un-deduped element once React mounts, so this
-      file stays title-less; scripts/prerender.mjs bakes React's rendered
-      <head> into dist/index.html at build time, so the deployed page never
-      actually serves a title-less document.
+      title/description/canonical/robots/og:*/twitter:*/hreflang are
+      intentionally omitted here — src/seo/SEO.jsx (backed by src/seo/meta.ts)
+      renders them per-route via react-helmet-async, which on React 19 hoists
+      real <title>/<meta>/<link> elements into <head> natively. A static
+      <title> here would be a second, un-deduped element once React mounts,
+      so this file stays title-less; scripts/prerender.mjs bakes React's
+      rendered <head> into dist/en/index.html and dist/ar/index.html at
+      build time (one Puppeteer pass per locale), so the deployed pages
+      never actually serve a title-less document. dist/index.html itself is
+      a separate, hand-written redirect fallback — see prerender.mjs.
     -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#000000" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Space+Grotesk:wght@300;400;500&display=swap"
-      rel="stylesheet"
-    />
+    <!-- Fonts (IBM Plex Sans Arabic, IBM Plex Mono) are self-hosted via
+         @fontsource, imported in src/index.css — no external font host, so
+         no preconnect needed. Per-locale weight preloads are emitted by
+         <SEO /> (src/seo/SEO.jsx) via react-helmet-async. -->
     <!-- Google Consent Mode v2 — defaults, must run before GTM/gtag.js -->
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -51,21 +51,39 @@
       })();
     </script>
     <!-- End Google Consent Mode v2 -->
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PX3PY4BBDL"></script>
+    <!-- Google tag (gtag.js) + Google Tag Manager — neither is needed for
+         first paint, so both loaders are deferred until the browser is idle
+         after `load` rather than racing the render-critical bundle/CSS for
+         the main thread. gtag()/dataLayer stay defined synchronously above
+         (Consent Mode) and in loadAnalytics() below so any early
+         gtag(...) calls elsewhere still queue correctly either way. -->
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() { window.dataLayer.push(arguments); }
 
-      gtag('config', 'G-PX3PY4BBDL');
+      function loadAnalytics() {
+        gtag('js', new Date());
+        gtag('config', 'G-PX3PY4BBDL');
+
+        var gtagScript = document.createElement('script');
+        gtagScript.async = true;
+        gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-PX3PY4BBDL';
+        document.head.appendChild(gtagScript);
+
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer','GTM-5KVFC3QW');
+      }
+
+      if (document.readyState === 'complete') {
+        setTimeout(loadAnalytics, 0);
+      } else {
+        window.addEventListener('load', function () {
+          setTimeout(loadAnalytics, 0);
+        });
+      }
     </script>
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-5KVFC3QW');</script>
     <!-- End Google Tag Manager -->
   </head>
   <body>

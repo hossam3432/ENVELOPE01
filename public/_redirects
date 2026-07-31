@@ -1,0 +1,7 @@
+# Root has no content of its own — it only exists to send visitors to the
+# default locale. Never a query param or cookie: the path prefix is the only
+# language switch (see src/i18n/locales.js). Cloudflare Pages evaluates this
+# before falling through to static files, so this is a real edge-level 302 —
+# scripts/prerender.mjs's dist/index.html is only a fallback for hosts that
+# don't read this file.
+/ /en/ 302

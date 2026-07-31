@@ -2,40 +2,34 @@ import ProductGallery from "./ProductGallery.jsx";
 import { PANEL } from "../ui/panel.js";
 import useIsNarrow from "../../hooks/useIsNarrow.js";
 import CalloutLegend from "../ui/CalloutLegend.jsx";
-
-// Same three facts the scale reference's leader lines point out, grouped by
-// where they sit on the sheet — the clearance note above the figure on a
-// phone, the two sleeve/laptop notes below it.
-const SCALE_CALLOUTS_ABOVE = [{ lines: ["25 CLEARANCE", "BELOW THE ZIP LINE"] }];
-const SCALE_CALLOUTS_BELOW = [
-  { lines: ["PADDED SLEEVE", "370 × 265, 6 MM FOAM"] },
-  { lines: ["16″ LAPTOP, CLOSED", "356 × 249"] },
-];
+import { useLocale } from "../../i18n/LocaleContext.jsx";
 
 const delay = (s) => ({ animationDelay: `${s}s` });
 
+// Pure dimension figures use the mono face; descriptive labels use the sans
+// face — both self-hosted, see index.css.
 const NOTE = {
   fontSize: 10,
   letterSpacing: "0.14em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Mono', monospace",
 };
 
 const NOTE_SM = {
   fontSize: 9,
   letterSpacing: "0.1em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Sans Arabic', sans-serif",
 };
 
 const DIM = {
   fontSize: 12,
   letterSpacing: "0.16em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Mono', monospace",
 };
 
 const CALLOUT = {
   fontSize: 11,
   letterSpacing: "0.14em",
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'IBM Plex Sans Arabic', sans-serif",
 };
 
 function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
@@ -70,11 +64,13 @@ function Callout({ leader, dot, x, y, anchor = "start", lines, at }) {
 /* View 3 — right gusset, drawn at 0.7 px per mm.
    120 deep × 310 high, zip running 15 down from the top edge. */
 function GussetElevation() {
+  const { t } = useLocale();
+  const p = t.product;
   return (
     <svg
       viewBox="0 0 400 400"
       role="img"
-      aria-label="Right gusset elevation: 120 millimetre depth, zip running 15 millimetres down from the top edge to a leather garage above the facet fold line, D-ring at the top, two of the four steel feet visible."
+      aria-label={p.gussetAriaLabel}
       className="bp-sheet mx-auto block max-h-[52dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -138,7 +134,7 @@ function GussetElevation() {
           stroke="none"
           style={NOTE}
         >
-          15
+          {p.gussetZipNote}
         </text>
       </g>
 
@@ -156,7 +152,7 @@ function GussetElevation() {
           stroke="none"
           style={DIM}
         >
-          310
+          {p.gussetHeightNote}
         </text>
       </g>
 
@@ -173,7 +169,7 @@ function GussetElevation() {
           stroke="none"
           style={DIM}
         >
-          120
+          {p.gussetDepthNote}
         </text>
       </g>
 
@@ -187,9 +183,9 @@ function GussetElevation() {
           stroke="none"
           style={NOTE_SM}
         >
-          <tspan x="284">FACET FOLD —</tspan>
+          <tspan x="284">{p.gussetFoldNoteLine1}</tspan>
           <tspan x="284" dy="12" opacity="0.75">
-            ZIP ENDS ABOVE IT
+            {p.gussetFoldNoteLine2}
           </tspan>
         </text>
       </g>
@@ -207,11 +203,13 @@ const SCALE_BOX = "0 0 720 370";
 const SCALE_BOX_NARROW = "160 15 400 360";
 
 function ScaleReference({ narrow }) {
+  const { t } = useLocale();
+  const p = t.product;
   return (
     <svg
       viewBox={narrow ? SCALE_BOX_NARROW : SCALE_BOX}
       role="img"
-      aria-label="Scale reference: a closed 16-inch laptop, 356 by 249 millimetres, shown as a hidden outline inside the 420 by 310 millimetre body, seated 25 millimetres below the zip line."
+      aria-label={p.scaleAriaLabel}
       className="bp-sheet mx-auto block max-h-[52dvh] w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -272,7 +270,7 @@ function ScaleReference({ narrow }) {
           stroke="none"
           style={DIM}
         >
-          420
+          {p.scaleWidthNote}
         </text>
       </g>
 
@@ -284,7 +282,7 @@ function ScaleReference({ narrow }) {
             dot={[300, 99]}
             x={20}
             y={99}
-            lines={["25 CLEARANCE", "BELOW THE ZIP LINE"]}
+            lines={p.scaleCalloutsAbove[0].lines}
           />
           <Callout
             at={2.2}
@@ -292,7 +290,7 @@ function ScaleReference({ narrow }) {
             dot={[233, 210]}
             x={20}
             y={219}
-            lines={["PADDED SLEEVE", "370 × 265, 6 MM FOAM"]}
+            lines={p.scaleCalloutsBelow[0].lines}
           />
           <Callout
             at={2.3}
@@ -301,7 +299,7 @@ function ScaleReference({ narrow }) {
             x={700}
             y={234}
             anchor="end"
-            lines={["16″ LAPTOP, CLOSED", "356 × 249"]}
+            lines={p.scaleCalloutsBelow[1].lines}
           />
         </>
       )}
@@ -312,11 +310,13 @@ function ScaleReference({ narrow }) {
 /* View 12 — the detachable strap, laid flat. 18 wide, swivel clip at each
    end, centre slide adjuster, adjusting 850–1350. */
 function StrapFlat() {
+  const { t } = useLocale();
+  const p = t.product;
   return (
     <svg
       viewBox="0 0 720 150"
       role="img"
-      aria-label="The detachable shoulder strap laid flat: 18 millimetres wide, brushed steel swivel clip at each end, centre slide adjuster, adjusting from 850 to 1350 millimetres."
+      aria-label={p.strapAriaLabel}
       className="bp-sheet w-full text-silver"
       fill="none"
       stroke="currentColor"
@@ -359,7 +359,7 @@ function StrapFlat() {
           stroke="none"
           style={DIM}
         >
-          850 – 1350
+          {p.strapRangeNote}
         </text>
       </g>
 
@@ -374,29 +374,17 @@ function StrapFlat() {
           stroke="none"
           style={CALLOUT}
         >
-          18 WIDE
+          {p.strapWideNote}
         </text>
       </g>
     </svg>
   );
 }
 
-const SPEC_ITEMS = [
-  { label: "External", value: "420 × 310 × 120 mm" },
-  { label: "Volume", value: "≈18 L" },
-  { label: "Weight", value: "1.15–1.30 kg, empty" },
-  { label: "Fit", value: "16″ laptop, upright" },
-  { label: "Closure", value: "#8 metal U-zip, ≈600 mm track, twin sliders" },
-  { label: "Handles", value: "Rolled leather, 250 mm, 100 mm clear drop" },
-  { label: "Strap", value: "Detachable, 18 mm, adjusts 850–1350 mm" },
-  { label: "Leather", value: "Full-grain, matte, 1.2 mm" },
-  { label: "Colorway", value: "Black or Bone" },
-  { label: "Hardware", value: "316L Brushed stainless steel" },
-  { label: "Base", value: "Flat, reinforced, four steel feet" },
-];
-
 export default function FlagshipShowcase() {
   const narrow = useIsNarrow();
+  const { t } = useLocale();
+  const p = t.product;
 
   return (
     <>
@@ -404,10 +392,10 @@ export default function FlagshipShowcase() {
       <section id="product" data-panel className={PANEL}>
         <div className="max-w-3xl">
           <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-            02 &mdash; The Standing Collection
+            {p.collectionEyebrow}
           </p>
           <h2 className="mt-3 font-serif text-2xl leading-tight text-bone md:text-4xl">
-            One Model. Built to Carry a Full Day.
+            {p.collectionH2}
           </h2>
         </div>
 
@@ -420,20 +408,19 @@ export default function FlagshipShowcase() {
       <section id="specs" data-panel className={PANEL}>
         <div className="max-w-3xl">
           <p className="text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-            02 &mdash; The Standing Collection
+            {p.collectionEyebrow}
           </p>
           <h2 className="mt-3 font-serif text-2xl leading-tight text-bone md:text-4xl">
-            Model 001 &mdash; The Folded Briefcase
+            {p.modelH2}
           </h2>
           <p className="mt-4 text-[11px] md:text-xs font-light uppercase leading-relaxed tracking-[0.18em] text-silver">
-            One flat panel per face, folded into four facets. U-zip main
-            compartment. Padded 16&Prime; sleeve. Stands on its own.
+            {p.modelIntro}
           </p>
         </div>
 
         <div className="mx-auto mt-8 w-full max-w-3xl">
           <dl className="rule-t divide-y divide-silver-dim/15">
-            {SPEC_ITEMS.map((item) => (
+            {p.specItems.map((item) => (
               <div
                 key={item.label}
                 className="flex items-baseline justify-between gap-4 py-2"
@@ -441,7 +428,7 @@ export default function FlagshipShowcase() {
                 <dt className="shrink-0 text-[11px] uppercase tracking-vast text-silver-dim">
                   {item.label}
                 </dt>
-                <dd className="text-right text-sm text-bone md:text-base">
+                <dd className="text-end font-mono text-sm text-bone md:text-base">
                   {item.value}
                 </dd>
               </div>
@@ -449,18 +436,18 @@ export default function FlagshipShowcase() {
           </dl>
 
           <p className="mt-3 text-[11px] font-light uppercase leading-loose tracking-[0.14em] text-silver-dim">
-            All external, in millimetres. Tolerance &plusmn;2 mm.
+            {p.toleranceNote}
           </p>
 
           <div className="mt-6 flex flex-col items-start gap-3 md:flex-row md:items-center md:gap-8">
-            <p className="font-serif text-2xl text-bone md:text-3xl">
-              6,500 &ndash; 7,000 EGP
+            <p className="font-mono text-2xl text-bone md:text-3xl">
+              {p.price}
             </p>
             <a
               href="#order"
               className="inline-block border border-bone/60 px-6 py-2.5 text-xs uppercase tracking-vast text-bone transition-colors duration-300 hover:bg-bone hover:text-carbon"
             >
-              Request to Order
+              {p.cta}
             </a>
           </div>
         </div>
@@ -469,26 +456,24 @@ export default function FlagshipShowcase() {
       {/* The gusset, drawn — the plate above shows the same view photographed */}
       <section id="gusset" data-panel className={PANEL}>
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          <p>Fig. 03 &mdash; Right Gusset, Elevation</p>
-          <p className="hidden md:block">120 Deep</p>
+          <p>{p.gussetFigCaption}</p>
+          <p className="hidden md:block">{p.gussetDepthLabel}</p>
         </div>
         <div className="mx-auto mt-6 w-full max-w-sm md:max-w-md">
           <GussetElevation />
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
-          The zip turns 15 mm down each gusset and stops in a leather garage
-          above the facet fold line &mdash; so the track never crosses a crease,
-          and the bag opens from either end without fighting the fold.
+          {p.gussetBody}
         </p>
       </section>
 
       {/* Scale reference — does the laptop actually fit */}
       <section id="scale" data-panel className={PANEL}>
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          <p>Fig. 15 &mdash; Scale Reference</p>
-          <p className="hidden md:block">16&Prime; Laptop In Situ</p>
+          <p>{p.scaleFigCaption}</p>
+          <p className="hidden md:block">{p.scaleSubLabel}</p>
         </div>
-        <CalloutLegend items={SCALE_CALLOUTS_ABOVE} className="mx-auto mt-6 w-full max-w-3xl" />
+        <CalloutLegend items={p.scaleCalloutsAbove} className="mx-auto mt-6 w-full max-w-3xl" />
 
         <div className="mt-6">
           <div className="mx-auto w-full max-w-3xl">
@@ -496,21 +481,18 @@ export default function FlagshipShowcase() {
           </div>
         </div>
 
-        <CalloutLegend items={SCALE_CALLOUTS_BELOW} className="mx-auto mt-6 w-full max-w-3xl" />
+        <CalloutLegend items={p.scaleCalloutsBelow} className="mx-auto mt-6 w-full max-w-3xl" />
 
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
-          A closed 16&Prime; laptop is 356 mm wide and 249 mm high. The padded
-          sleeve is 370 &times; 265, and the laptop seats 25 mm below the zip
-          line &mdash; so the track never runs across the lid when you close
-          the bag.
+          {p.scaleBody}
         </p>
       </section>
 
       {/* The strap */}
       <section id="strap" data-panel className={PANEL}>
         <div className="flex items-baseline justify-between text-[11px] md:text-xs uppercase tracking-vast text-silver-dim">
-          <p>Fig. 12 &mdash; Strap, Laid Flat</p>
-          <p className="hidden md:block">Detachable</p>
+          <p>{p.strapFigCaption}</p>
+          <p className="hidden md:block">{p.strapSubLabel}</p>
         </div>
         <div className="mt-6">
           <div className="mx-auto w-full max-w-3xl">
@@ -518,10 +500,7 @@ export default function FlagshipShowcase() {
           </div>
         </div>
         <p className="mx-auto mt-6 max-w-2xl text-base font-light leading-relaxed text-silver">
-          18 mm leather, brushed steel swivel clips at both ends, centre slide
-          adjuster. It adjusts from 850 to 1350 mm &mdash; a 55 cm maximum
-          drop, which is crossbody on a tall wearer. Unclip it and the bag is
-          a briefcase again.
+          {p.strapBody}
         </p>
       </section>
     </>
