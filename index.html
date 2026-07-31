@@ -6,11 +6,13 @@
     <!--
       title/description/canonical/robots/og:*/twitter:* are intentionally
       omitted here — src/seo/SEO.jsx (backed by src/seo/meta.ts) renders them
-      per-route via react-helmet-async, and scripts/prerender.mjs bakes the
-      resulting <head> into dist/index.html at build time. This static
-      fallback title only covers the pre-hydration flash / dev server.
+      per-route via react-helmet-async, which on React 19 hoists real
+      <title>/<meta>/<link> elements into <head> natively. A static <title>
+      here would be a second, un-deduped element once React mounts, so this
+      file stays title-less; scripts/prerender.mjs bakes React's rendered
+      <head> into dist/index.html at build time, so the deployed page never
+      actually serves a title-less document.
     -->
-    <title>ENVELOPE — Structured Leather Work Briefcase | Cairo</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#000000" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
