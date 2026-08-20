@@ -30,6 +30,8 @@
     "wrangler": "^4.114.0"
   },
   "allowScripts": {
-    "puppeteer@25.4.0": true
+    "puppeteer@25.4.0": true,
+    "esbuild@0.28.1": true,
+    "workerd@1.20260722.1": true
   }
 }

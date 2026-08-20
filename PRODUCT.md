@@ -72,28 +72,34 @@ facts, recorded below, but were not selected as the differentiating position.
   100 mm clear drop; strap detachable, 18 mm, adjusts 850–1350 mm; leather
   full-grain, matte, 1.2 mm; hardware 316L brushed stainless steel; base flat,
   reinforced, four steel feet; construction 7–9 SPI.
+- Laptop fit is **16″, confirmed** (brand owner, 2026-08-20). CLAUDE.md's Voice
+  section previously used a 15-inch sentence as its illustrative example; it was
+  rewritten on that date so the guardrail file cannot be cited against the
+  published spec. No specification source changed.
 
 **Open and blocking items — do not treat as settled**
 
-- **Price is published wrong in four places.** The confirmed price is 9,500 EGP.
-  Currently stale and contradicting it: `CLAUDE.md` (Brand: "6,500 EGP"),
+- **Price is published wrong across the site.** Reconfirmed by the brand owner
+  on 2026-08-20: the price is 9,500 EGP, fixed. `CLAUDE.md` was corrected to
+  match on that date. The published surfaces are still stale and contradict it:
   `src/seo/schema.ts:142` (`price: "6500"`), `src/seo/meta.ts:83–84` (6,500 in
-  both locales), and `src/i18n/content/en.js:101` / `ar.js:118`
-  ("6,500 – 7,000 EGP", a range that also violates the fixed-price rule).
-  `src/i18n/content/en.js:389` / `ar.js:408` carry a 6,500 heading. This must be
-  corrected before any price-anchored page ships.
+  both locales), `src/i18n/content/en.js:101` / `ar.js:118` ("6,500 – 7,000 EGP",
+  a range that also violates the fixed-price rule), and
+  `src/i18n/content/en.js:389` / `ar.js:408` (6,500 heading). All six must be
+  corrected before any price-anchored page ships. The correction has been
+  identified but not applied.
+- **Leather thickness disagrees between authorities.** Every specification source
+  states 1.2 mm (`specItems`, `MaterialTruth.jsx` `specs`, `meta.ts:83`).
+  CLAUDE.md's Voice section uses "Full-grain leather, 1.2–1.4 mm" as its
+  illustrative example. Same class of conflict as the laptop-fit figure resolved
+  on 2026-08-20, but not yet put to the brand owner. Do not publish 1.4 mm
+  anywhere until the range is confirmed or the example is corrected to 1.2 mm.
 - **No order capture exists.** `src/components/contact/OrderInquiry.jsx:69`
   calls `preventDefault()` and shows the success state on a 450 ms timer. There
   is no fetch, no mailto, no endpoint — every order request submitted today is
   silently discarded while the buyer is told it was received. Intended
   resolution, per the brand owner: an email relay or form backend. The endpoint
   is not chosen and not built.
-- **Laptop-fit figure disagrees between authorities.** Every specification
-  source states 16″ (`specItems`, `schema.ts:31`, `meta.ts:83`). CLAUDE.md's
-  Voice section uses "Fits a 15-inch laptop upright" as its illustrative
-  example. Read as a voice sample rather than a spec claim, but the number
-  should be reconciled so the guardrail file cannot be cited against the
-  published spec.
 - **Four content pages are routed but not live.** `src/routes.js` defines
   specification, identify-full-grain-leather, hardware, and price-policy, all
   `ready: false` with TODO body copy. Go-live conditions are in

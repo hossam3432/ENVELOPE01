@@ -6,7 +6,7 @@ Every future task in this repo must read and obey this file.
 - Brand name: ENVELOPE. Product: Model No. 0.1. Domain: envelope01.com.
 - One SKU. Structured black leather work briefcase with a folded-envelope front panel
   that functions as a magnetic-closure pocket.
-- Price: 6,500 EGP. Cash on delivery. The price is never discounted, never framed as an
+- Price: 9,500 EGP. Cash on delivery. The price is never discounted, never framed as an
   offer, and never presented with a strikethrough or "was/now" markup.
 - Market: Cairo, Giza, Alexandria. Private-sector professionals aged 25–40.
 
@@ -14,7 +14,7 @@ Every future task in this repo must read and obey this file.
 - Declarative, evidence-first, closer to a product datasheet than to fashion copy.
 - State the specification and let the reader draw the conclusion.
 - Write: "Full-grain leather, 1.2–1.4 mm." Not: "Genuine leather, premium quality."
-- Write: "Fits a 15-inch laptop upright." Not: "Perfect for the modern professional."
+- Write: "Fits a 16-inch laptop upright." Not: "Perfect for the modern professional."
 
 ## Absolute prohibitions
 - Never use the phrase "genuine leather" (or "جلد أصلي" as a quality claim) anywhere,
